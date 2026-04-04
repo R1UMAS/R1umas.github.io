@@ -1,997 +1,1423 @@
 <!DOCTYPE html>
 <html lang="fr" data-theme="dark" data-lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marius Queulin – Junior Level Designer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marius Queulin – Junior Level Designer</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet" />
 
-  <style>
-    /* ╔══════════════════════════════════════════════════════════════╗
-       ║  PARAMÈTRES GLOBAUX — MODIFIABLES ICI                      ║
-       ╠══════════════════════════════════════════════════════════════╣
-       ║  --section-gap : espacement vertical uniforme entre toutes  ║
-       ║    les sections. Changez UNE valeur → tout s'ajuste.        ║
-       ╚══════════════════════════════════════════════════════════════╝ */
-    :root {
-      --section-gap: 72px;
+    <style>
+            /* ╔══════════════════════════════════════════════════════════════╗
+           ║  PARAMÈTRES GLOBAUX - MODIFIABLES ICI                      ║
+           ╠══════════════════════════════════════════════════════════════╣
+           ║  --section-gap : espacement vertical uniforme entre toutes  ║
+           ║    les sections. Changez une valeur → tout s'ajuste.        ║
+           ╚══════════════════════════════════════════════════════════════╝ */
+            :root {
+                /* ▼ ESPACEMENT UNIFORME ENTRE SECTIONS (haut + bas de chaque section) ▼ */
+                --section-gap: 72px;
+                /* ───────────────────────────────────────────────────────────────────── */
+            }
 
-      /* ── HAUTEUR DES BLOCS CV ─────────────────────────────────────
-         Calculé automatiquement au ratio A4 (×1.414) sur la demi-
-         largeur du contenu. Ajustez le multiplicateur si besoin.    */
-      --cv-height: calc((min(1100px, 100vw) - 96px) / 2 * 1.414);
+            /* ============================================================
+           THÈME DARK
+           --bg-base : couleur de base (header, projets, footer = impairs)
+           --bg-alt  : base + ~10% de blanc (demoreel, profil = pairs)
+        ============================================================ */
+            :root,
+            [data-theme="dark"] {
+                --bg-base: #0e0e0e;
+                --bg-alt: #252525; /* #0e0e0e + ~10% blanc */
+                --surface: #1e1e1e;
+                --surface2: #161616;
+                --accent: #7b8cff;
+                --accent-dim: rgba(123,140,255,0.18);
+                --text: #e8e8e8;
+                --muted: #888;
+                --border: rgba(255,255,255,0.08);
+                --grid-color: rgba(123,140,255,0.04);
+            }
 
-      /* ── SCROLL-PADDING ────────────────────────────────────────────
-         Compense la hauteur du header sticky pour que les ancres
-         affichent le haut de la section sans la cacher sous le header.
-         Doit être ≥ hauteur réelle du header (≈ 62px).               */
-      --header-h: 62px;
-    }
+            /* ============================================================
+           THÈME LIGHT
+           --bg-base : couleur de base claire
+           --bg-alt  : base - ~10% de blanc = légèrement plus sombre
+        ============================================================ */
+            [data-theme="light"] {
+                --bg-base: #f2f2f2;
+                --bg-alt: #d8d8d8; /* #f2f2f2 - ~10% blanc */
+                --surface: #ffffff;
+                --surface2: #ebebeb;
+                --accent: #5a6aff;
+                --accent-dim: rgba(90,106,255,0.12);
+                --text: #1a1a1a;
+                --muted: #555;
+                --border: rgba(0,0,0,0.10);
+                --grid-color: rgba(90,106,255,0.05);
+            }
 
-    /* ── Scroll offset ancres : la bordure haute de chaque section
-       est parfaitement alignée avec le bas du header sticky ──────── */
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: var(--header-h);
-    }
+            /* ============================================================
+           RESET & BASE
+        ============================================================ */
+            *, *::before, *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
 
-    /* ============================================================
-       THÈME DARK
-    ============================================================ */
-    :root,
-    [data-theme="dark"] {
-      --bg-base:    #0e0e0e;
-      --bg-alt:     #252525;
-      --surface:    #1e1e1e;
-      --surface2:   #161616;
-      --accent:     #7b8cff;
-      --accent-dim: rgba(123,140,255,0.18);
-      --text:       #e8e8e8;
-      --muted:      #888;
-      --border:     rgba(255,255,255,0.08);
-      --grid-color: rgba(123,140,255,0.04);
-      /* header semi-transparent cohérent avec bg-base */
-      --header-bg:  rgba(14,14,14,0.93);
-    }
+            html {
+                scroll-behavior: smooth;
+            }
 
-    /* ============================================================
-       THÈME LIGHT
-    ============================================================ */
-    [data-theme="light"] {
-      --bg-base:    #f2f2f2;
-      --bg-alt:     #d8d8d8;
-      --surface:    #ffffff;
-      --surface2:   #ebebeb;
-      --accent:     #5a6aff;
-      --accent-dim: rgba(90,106,255,0.12);
-      --text:       #1a1a1a;
-      --muted:      #555;
-      --border:     rgba(0,0,0,0.10);
-      --grid-color: rgba(90,106,255,0.05);
-      --header-bg:  rgba(242,242,242,0.93);
-    }
+            body {
+                color: var(--text);
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 300;
+                line-height: 1.65;
+                transition: color 0.35s ease;
+                background-color: var(--bg-base); /* fallback */
+            }
 
-    /* ============================================================
-       RESET & BASE
-    ============================================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+            /* ============================================================
+           COULEURS ALTERNÉES DES SECTIONS
+           Section impaire (1, 3, 5…) → bg-base
+           Section paire   (2, 4)     → bg-alt
+           Ordre : header(base) | demoreel(alt) | projets(base) | profil(alt) | footer(base)
+        ============================================================ */
 
-    body {
-      color: var(--text);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
-      line-height: 1.65;
-      transition: color 0.35s ease;
-      background-color: var(--bg-base);
-    }
+            /* Wrapper pleine largeur pour chaque section = permet bg qui déborde */
+            .section-wrap {
+                width: 100%;
+                transition: background-color 0.35s ease;
+                /* Motif de fond (placé ici pour s'appliquer à toute la largeur) */
+                background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+                background-size: 40px 40px;
+            }
+                /* Sections impaires : couleur de base */
+                .section-wrap.bg-base {
+                    background-color: var(--bg-base);
+                }
+                /* Sections paires : couleur alternative (+10% blanc / -10% blanc) */
+                .section-wrap.bg-alt {
+                    background-color: var(--bg-alt);
+                }
 
-    /* ── Mise à l'échelle pour grands écrans (2K, 4K) ─────────────
-       À 1080p le site garde sa taille de référence.
-       Au-delà, on laisse le contenu s'étirer jusqu'à max-width.
-       Pour un vrai zoom 2K, décommentez le bloc @media ci-dessous
-       dans la section RESPONSIVE.                                   */
+            /* Contenu centré dans la largeur max */
+            .section-inner {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: var(--section-gap) 48px;
+            }
 
-    /* ============================================================
-       COULEURS ALTERNÉES DES SECTIONS
-       header(base) | demoreel(alt) | projets(base) | profil(alt) | footer(base)
-    ============================================================ */
-    .section-wrap {
-      width: 100%;
-      transition: background-color 0.35s ease;
-      background-image:
-        linear-gradient(var(--grid-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-    .section-wrap.bg-base { background-color: var(--bg-base); }
-    .section-wrap.bg-alt  { background-color: var(--bg-alt);  }
+            /* ============================================================
+           HEADER
+        ============================================================ */
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                width: 100%;
+                backdrop-filter: blur(12px);
+                border-bottom: 1px solid var(--border);
+                transition: background-color 0.35s ease, border-color 0.35s ease;
+                /* bg-base avec opacité pour le sticky blur */
+                background-color: color-mix(in srgb, var(--bg-base) 93%, transparent);
+            }
 
-    .section-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: var(--section-gap) 48px;
-    }
+            .header-inner {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 18px 48px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
 
-    /* ============================================================
-       HEADER STICKY
-       ─────────────────────────────────────────────────────────────
-       NOTE : color-mix() est bien supporté sur Chrome 111+, Firefox 113+,
-       Safari 16.2+. Pour les navigateurs plus anciens, --header-bg
-       sert de fallback (défini dans les variables thème ci-dessus).
-    ============================================================ */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      width: 100%;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      transition: background-color 0.35s ease, border-color 0.35s ease;
-      background-color: var(--header-bg);      /* fallback fiable */
-    }
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 14px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: var(--header-h);
-    }
+            .header-brand h1 {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 1.1rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                background: var(--accent);
+                color: #fff;
+                padding: 4px 10px;
+                display: inline-block;
+            }
 
-    .header-brand h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700; font-size: 1.05rem;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      background: var(--accent); color: #fff;
-      padding: 4px 10px; display: inline-block;
-    }
-    .header-brand p {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.68rem; letter-spacing: 0.22em;
-      color: var(--muted); text-transform: uppercase;
-      margin-top: 3px; padding-left: 2px;
-    }
+            .header-brand p {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.7rem;
+                letter-spacing: 0.22em;
+                color: var(--muted);
+                text-transform: uppercase;
+                margin-top: 3px;
+                padding-left: 2px;
+            }
 
-    nav { display: flex; gap: 10px; align-items: center; }
+            nav {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
 
-    nav a.nav-link {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600; font-size: 0.72rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--text); text-decoration: none;
-      border: 1px solid var(--text); padding: 6px 18px;
-      transition: background 0.3s, color 0.3s, border-color 0.3s;
-    }
-    nav a.nav-link:hover { background: var(--text); color: var(--bg-base); }
+                nav a.nav-link {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 600;
+                    font-size: 0.75rem;
+                    letter-spacing: 0.15em;
+                    text-transform: uppercase;
+                    color: var(--text);
+                    text-decoration: none;
+                    border: 1px solid var(--text);
+                    padding: 7px 20px;
+                    transition: background 0.3s, color 0.3s, border-color 0.3s;
+                }
 
-    .nav-sep { width: 1px; height: 26px; background: var(--border); margin: 0 4px; }
+                    nav a.nav-link:hover {
+                        background: var(--text);
+                        color: var(--bg-base);
+                    }
 
-    .lang-toggle {
-      display: flex; border: 1px solid var(--border); overflow: hidden;
-    }
-    .lang-toggle button {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700; font-size: 0.65rem; letter-spacing: 0.14em;
-      text-transform: uppercase; padding: 5px 11px;
-      background: none; border: none; color: var(--muted);
-      cursor: pointer; transition: background 0.25s, color 0.25s;
-    }
-    .lang-toggle button.active { background: var(--accent); color: #fff; }
-    .lang-toggle button:not(.active):hover { background: var(--accent-dim); color: var(--text); }
+            .nav-sep {
+                width: 1px;
+                height: 28px;
+                background: var(--border);
+                margin: 0 4px;
+            }
 
-    .theme-toggle {
-      width: 34px; height: 34px; border: 1px solid var(--border);
-      background: none; color: var(--text); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.95rem; transition: border-color 0.3s, background 0.3s; flex-shrink: 0;
-    }
-    .theme-toggle:hover { border-color: var(--accent); background: var(--accent-dim); }
-    .icon-moon { display: block; }
-    .icon-sun  { display: none;  }
-    [data-theme="light"] .icon-moon { display: none;  }
-    [data-theme="light"] .icon-sun  { display: block; }
+            /* FR / EN toggle */
+            .lang-toggle {
+                display: flex;
+                border: 1px solid var(--border);
+                overflow: hidden;
+            }
 
-    /* ============================================================
-       TRADUCTION FR / EN
-    ============================================================ */
-    [data-lang="fr"] .t-en { display: none; }
-    [data-lang="en"] .t-fr { display: none; }
+                .lang-toggle button {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 700;
+                    font-size: 0.68rem;
+                    letter-spacing: 0.14em;
+                    text-transform: uppercase;
+                    padding: 6px 12px;
+                    background: none;
+                    border: none;
+                    color: var(--muted);
+                    cursor: pointer;
+                    transition: background 0.25s, color 0.25s;
+                }
 
-    /* ============================================================
-       TITRES DE SECTION
-    ============================================================ */
-    .section-title {
-      display: block;
-      font-family: 'Montserrat', sans-serif; font-weight: 700;
-      font-size: 0.88rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: #fff; background: var(--accent);
-      padding: 8px 28px; text-align: center;
-      margin: 0 auto calc(var(--section-gap) * 0.6);
-      width: fit-content;
-    }
+                    .lang-toggle button.active {
+                        background: var(--accent);
+                        color: #fff;
+                    }
 
-    /* ============================================================
-       DEMOREEL
-    ============================================================ */
-    #demoreel { text-align: center; }
-    .video-wrapper {
-      position: relative; width: 100%; max-width: 700px;
-      margin: 0 auto; aspect-ratio: 16/9;
-      background: #000; border: 1px solid var(--border);
-    }
-    .video-wrapper iframe {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%; border: none;
-    }
-    .video-meta { margin-top: 10px; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
+                    .lang-toggle button:not(.active):hover {
+                        background: var(--accent-dim);
+                        color: var(--text);
+                    }
 
-    /* ============================================================
-       PROJETS
-    ============================================================ */
-    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+            /* Dark / Light toggle */
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
+                border: 1px solid var(--border);
+                background: none;
+                color: var(--text);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                transition: border-color 0.3s, background 0.3s;
+                flex-shrink: 0;
+            }
 
-    .project-card {
-      position: relative; overflow: hidden;
-      display: block; text-decoration: none; color: inherit;
-      background: var(--surface2); border: 1px solid var(--border);
-      cursor: pointer;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .project-card:hover {
-      border-color: var(--accent); transform: scale(1.015);
-      box-shadow: 0 8px 32px rgba(123,140,255,0.15);
-    }
-    .project-card::after {
-      content: '→'; position: absolute; top: 12px; right: 14px;
-      font-size: 1.1rem; color: #fff; opacity: 0; transform: translateX(-6px);
-      transition: opacity 0.25s, transform 0.25s; pointer-events: none; z-index: 2;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
-    }
-    .project-card:hover::after { opacity: 1; transform: translateX(0); }
-    .project-card .cover {
-      width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
-      filter: brightness(0.85); transition: filter 0.3s ease;
-    }
-    .project-card:hover .cover { filter: brightness(1); }
-    .project-tag {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.55rem; letter-spacing: 0.12em; color: var(--muted);
-      text-transform: uppercase; text-align: center;
-      padding: 5px 8px; border-top: 1px solid var(--border); background: var(--surface2);
-    }
-    .project-info { padding: 12px 16px 16px; border-top: 1px solid var(--border); }
-    .project-info h3 {
-      font-family: 'Montserrat', sans-serif; font-weight: 600;
-      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
-      margin-bottom: 5px; color: var(--text);
-    }
-    .project-info p { font-size: 0.74rem; color: var(--muted); text-align: center; }
+                .theme-toggle:hover {
+                    border-color: var(--accent);
+                    background: var(--accent-dim);
+                }
 
-    /* Mini-galerie cliquable */
-    .mini-gallery-link {
-      display: block; text-decoration: none; color: inherit;
-      position: relative; margin-top: 4px;
-      border: 1px solid var(--border); overflow: hidden;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .mini-gallery-link:hover { border-color: var(--accent); box-shadow: 0 8px 32px rgba(123,140,255,0.15); }
-    .mini-gallery { display: flex; }
-    .mini-gallery img {
-      flex: 1; height: 100px; object-fit: cover;
-      filter: brightness(0.8); transition: filter 0.3s; display: block;
-    }
-    .mini-gallery img + img { border-left: 2px solid var(--bg-base); }
-    .mini-gallery-link:hover .mini-gallery img { filter: brightness(1.05); }
-    .mini-gallery-label {
-      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s; pointer-events: none;
-    }
-    .mini-gallery-label span {
-      font-family: 'Montserrat', sans-serif; font-weight: 700;
-      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
-      background: var(--accent); color: #fff; padding: 6px 18px;
-    }
-    .mini-gallery-link:hover .mini-gallery-label { opacity: 1; }
+            .icon-moon {
+                display: block;
+            }
 
-    /* ============================================================
-       PROFIL
-    ============================================================ */
-    .profil-top {
-      display: grid;
-      /* Photo réduite d'1/3 : 260 → ~170px */
-      grid-template-columns: 170px 1fr;
-      gap: 4px; margin-bottom: 36px;
-    }
-    .profil-photo {
-      /* object-fit: contain → image entière visible, pas de crop */
-      width: 100%;
-      display: block;
-      object-fit: contain;
-      object-position: top center;
-      filter: grayscale(1) contrast(1.05);
-      border: 1px solid var(--border);
-      background: var(--surface2); /* fond derrière si ratio ne correspond pas */
-    }
-    .profil-bio {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 18px 20px;
-      display: flex; flex-direction: column; justify-content: space-between;
-      transition: background 0.35s;
-    }
-    .profil-bio h2 {
-      font-family: 'Montserrat', sans-serif; font-weight: 700;
-      font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .profil-bio p { font-size: 0.75rem; color: var(--muted); margin-bottom: 7px; }
-    .profil-bio p strong {
-      color: var(--text); font-weight: 600; text-transform: uppercase;
-      font-family: 'Montserrat', sans-serif; font-size: 0.77rem;
-    }
-    .social-icons { display: flex; gap: 10px; margin-top: 14px; }
-    .social-icons a {
-      display: flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 50%; color: var(--text); text-decoration: none;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .social-icons a svg { width: 15px; height: 15px; }
-    .social-icons a:hover { border-color: var(--accent); background: var(--accent-dim); }
+            .icon-sun {
+                display: none;
+            }
 
-    /* ── CV & REFERENCE BOOK ──────────────────────────────────── */
-    .cv-section-title {
-      font-family: 'Montserrat', sans-serif; font-weight: 700;
-      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
-      background: var(--accent-dim); border: 1px solid var(--accent);
-      color: var(--accent); text-align: center;
-      padding: 9px; margin-bottom: 14px;
-    }
+            [data-theme="light"] .icon-moon {
+                display: none;
+            }
 
-    /* Panneau principal : 2 moitiés égales, hauteur A4 verrouillée */
-    .cv-panels {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-      margin-bottom: 8px;
-      height: var(--cv-height);
-    }
+            [data-theme="light"] .icon-sun {
+                display: block;
+            }
 
-    /* Gauche : CV FR (1fr) + CV EN (2fr) */
-    .cv-panel-left {
-      display: grid; grid-template-columns: 1fr 2fr;
-      gap: 4px; height: 100%;
-    }
-    /* Droite : Reference Book pleine hauteur */
-    .cv-panel-right { display: flex; flex-direction: column; height: 100%; }
+            /* ============================================================
+           TRADUCTION FR / EN
+        ============================================================ */
+            [data-lang="fr"] .t-en {
+                display: none;
+            }
 
-    /* Carte CV commune */
-    .cv-card {
-      position: relative; overflow: hidden;
-      display: flex; flex-direction: column;
-      text-decoration: none; background: var(--surface);
-      border: 1px solid var(--border); cursor: pointer; height: 100%;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .cv-card:hover { border-color: var(--accent); box-shadow: 0 6px 24px rgba(123,140,255,0.15); }
+            [data-lang="en"] .t-fr {
+                display: none;
+            }
 
-    .cv-lang {
-      font-family: 'Montserrat', sans-serif; font-weight: 700;
-      font-size: 0.62rem; letter-spacing: 0.18em;
-      background: var(--surface2); border-bottom: 1px solid var(--border);
-      padding: 5px 8px; text-align: center; color: var(--muted); flex-shrink: 0;
-    }
+            /* ============================================================
+           TITRES DE SECTION (bandeau accent)
+        ============================================================ */
+            .section-title {
+                display: block;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 0.9rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: #fff;
+                background: var(--accent);
+                padding: 8px 28px;
+                text-align: center;
+                margin: 0 auto calc(var(--section-gap) * 0.6);
+                width: fit-content;
+            }
 
-    /* Vignette CV : object-fit contain → pas de crop, image entière visible */
-    .cv-thumb {
-      width: 100%; flex: 1; min-height: 0; display: block;
-      object-fit: contain;      /* ← contient l'image sans la couper */
-      object-position: top center;
-      background: var(--surface2); /* fond neutre derrière l'image */
-      filter: brightness(0.9); transition: filter 0.3s;
-    }
-    .cv-card:hover .cv-thumb { filter: brightness(1.05); }
+            /* ============================================================
+           DEMOREEL
+        ============================================================ */
+            #demoreel {
+                text-align: center;
+            }
 
-    .cv-overlay {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(0,0,0,0.62); opacity: 0; transition: opacity 0.3s;
-      font-family: 'Montserrat', sans-serif; font-size: 0.65rem;
-      letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
-      flex-direction: column; gap: 6px; padding: 8px; text-align: center;
-    }
-    .cv-card:hover .cv-overlay { opacity: 1; }
-    .cv-overlay span { background: var(--accent); padding: 5px 10px; display: block; }
+            .video-wrapper {
+                position: relative;
+                width: 100%;
+                max-width: 700px;
+                margin: 0 auto;
+                aspect-ratio: 16/9;
+                background: #000;
+                border: 1px solid var(--border);
+            }
 
-    .cv-note {
-      text-align: center; font-size: 0.68rem;
-      font-style: italic; color: var(--muted); margin-top: 5px;
-    }
+                .video-wrapper iframe {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                }
 
-    /* Galerie photos */
-    .photo-gallery {
-      display: grid; grid-template-columns: 1fr 2fr 1fr;
-      gap: 4px; margin-top: 36px;
-    }
-    .photo-gallery .col-center { display: flex; flex-direction: column; gap: 4px; }
-    .photo-gallery img {
-      width: 100%; object-fit: cover;
-      filter: grayscale(1) brightness(0.75);
-      border: 1px solid var(--border); display: block;
-    }
-    .photo-gallery .col-side { background: var(--surface); border: 1px solid var(--border); }
+            .video-meta {
+                margin-top: 10px;
+                font-size: 0.75rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+            }
 
-    /* ============================================================
-       FOOTER
-    ============================================================ */
-    footer { width: 100%; border-top: 1px solid var(--border); transition: background-color 0.35s ease; }
-    .footer-inner {
-      max-width: 1100px; margin: 0 auto; padding: 24px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .footer-brand h2 {
-      font-family: 'Montserrat', sans-serif; font-weight: 700;
-      font-size: 0.88rem; letter-spacing: 0.2em; text-transform: uppercase;
-      background: var(--accent); color: #fff; padding: 4px 10px; display: inline-block;
-    }
-    .footer-brand p {
-      font-family: 'Montserrat', sans-serif; font-size: 0.65rem;
-      letter-spacing: 0.2em; color: var(--muted); margin-top: 3px; padding-left: 2px;
-    }
-    .back-top {
-      width: 42px; height: 42px; border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text); text-decoration: none; font-size: 1.2rem;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .back-top:hover { border-color: var(--accent); background: var(--accent-dim); }
+            /* ============================================================
+           PROJETS
+        ============================================================ */
+            .projects-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4px;
+            }
 
-    /* ============================================================
-       MODALE PDF
-    ============================================================ */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.9); z-index: 500;
-      align-items: center; justify-content: center; flex-direction: column;
-    }
-    .modal-overlay.active { display: flex; }
-    .modal-box {
-      background: var(--surface); border: 1px solid var(--border);
-      width: min(92vw, 860px); max-height: 92vh; display: flex; flex-direction: column;
-    }
-    .modal-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 11px 18px; border-bottom: 1px solid var(--border);
-    }
-    .modal-header span {
-      font-family: 'Montserrat', sans-serif; font-size: 0.75rem;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
-    }
-    .modal-close { background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
-    .modal-body { flex: 1; overflow: hidden; }
-    .modal-body iframe { width: 100%; height: 78vh; border: none; }
-    .modal-footer {
-      padding: 10px 18px; border-top: 1px solid var(--border);
-      display: flex; justify-content: flex-end; gap: 10px;
-    }
-    .btn {
-      font-family: 'Montserrat', sans-serif; font-size: 0.7rem;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 7px 18px; cursor: pointer;
-      border: 1px solid var(--text); background: none; color: var(--text);
-      text-decoration: none; transition: background 0.3s, color 0.3s;
-    }
-    .btn:hover { background: var(--text); color: var(--bg-base); }
-    .btn-accent { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .btn-accent:hover { background: #9aaaff; border-color: #9aaaff; color: #fff; }
+            .project-card {
+                position: relative;
+                overflow: hidden;
+                display: block;
+                text-decoration: none;
+                color: inherit;
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                cursor: pointer;
+                transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            }
 
-    /* ============================================================
-       RESPONSIVE — MOBILE (≤ 700px)
-    ============================================================ */
-    @media (max-width: 700px) {
-      :root {
-        --section-gap: 36px;
-        --header-h: 100px; /* header empilé = plus haut sur mobile */
-        --cv-height: auto;
-      }
+                .project-card:hover {
+                    border-color: var(--accent);
+                    transform: scale(1.015);
+                    box-shadow: 0 8px 32px rgba(123,140,255,0.15);
+                }
 
-      .header-inner { padding: 10px 16px; flex-direction: column; align-items: flex-start; gap: 8px; }
-      nav { width: 100%; flex-wrap: wrap; gap: 6px; }
-      nav a.nav-link { padding: 5px 10px; font-size: 0.65rem; }
-      .nav-sep { display: none; }
+                .project-card::after {
+                    content: '→';
+                    position: absolute;
+                    top: 12px;
+                    right: 14px;
+                    font-size: 1.2rem;
+                    color: #fff;
+                    opacity: 0;
+                    transform: translateX(-6px);
+                    transition: opacity 0.25s, transform 0.25s;
+                    pointer-events: none;
+                    z-index: 2;
+                    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+                }
 
-      .section-inner { padding: var(--section-gap) 14px; }
-      .footer-inner  { padding: 18px 14px; flex-direction: column; align-items: flex-start; gap: 12px; }
+                .project-card:hover::after {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
 
-      .section-title { font-size: 0.75rem; padding: 6px 14px; }
+                .project-card .cover {
+                    width: 100%;
+                    aspect-ratio: 16/9;
+                    object-fit: cover;
+                    display: block;
+                    filter: brightness(0.85);
+                    transition: filter 0.3s ease;
+                }
 
-      /* Projets 1 colonne */
-      .projects-grid { grid-template-columns: 1fr; }
-      .mini-gallery img { height: 64px; }
+                .project-card:hover .cover {
+                    filter: brightness(1);
+                }
 
-      /* Profil empilé */
-      .profil-top { grid-template-columns: 1fr; }
-      .profil-photo { max-height: 280px; }
-      .profil-bio { padding: 14px; }
+            .project-tag {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.58rem;
+                letter-spacing: 0.14em;
+                color: var(--muted);
+                text-transform: uppercase;
+                text-align: center;
+                padding: 6px 8px;
+                border-top: 1px solid var(--border);
+                background: var(--surface2);
+            }
 
-      /* CV : empilés verticalement */
-      .cv-panels { grid-template-columns: 1fr; gap: 8px; height: auto; }
-      .cv-panel-left { grid-template-columns: 1fr 2fr; gap: 4px; height: auto; }
-      .cv-panel-right { height: auto; }
-      .cv-card { height: auto; min-height: 200px; }
+            .project-info {
+                padding: 14px 16px 18px;
+                border-top: 1px solid var(--border);
+            }
 
-      /* Galerie */
-      .photo-gallery { grid-template-columns: 1fr; }
-      .photo-gallery .col-side { display: none; }
-      .photo-gallery img { height: 140px !important; }
-    }
+                .project-info h3 {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 600;
+                    font-size: 0.8rem;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    margin-bottom: 6px;
+                    color: var(--text);
+                }
 
-    /* ── Tablette (701–900px) ── */
-    @media (min-width: 701px) and (max-width: 900px) {
-      .section-inner { padding: calc(var(--section-gap) * 0.8) 28px; }
-    }
+                .project-info p {
+                    font-size: 0.78rem;
+                    color: var(--muted);
+                    text-align: center;
+                }
 
-    /* ── Grands écrans 2K+ (≥ 1920px) ────────────────────────────
-       Le contenu s'étire jusqu'à max-width (1100px) naturellement.
-       Pour grossir tous les éléments proportionnellement sur 2K,
-       décommentez les lignes ci-dessous :
+            /* Mini-galerie – UN seul conteneur cliquable */
+            .mini-gallery-link {
+                display: block;
+                text-decoration: none;
+                color: inherit;
+                position: relative;
+                margin-top: 4px;
+                border: 1px solid var(--border);
+                overflow: hidden;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
 
-    @media (min-width: 1920px) {
-      html { font-size: 120%; }
-      :root {
-        --section-gap: 88px;
-        --header-h: 74px;
-        --cv-height: calc((min(1320px, 100vw) - 96px) / 2 * 1.414);
-      }
-      .section-inner  { max-width: 1320px; }
-      .header-inner   { max-width: 1320px; }
-      .footer-inner   { max-width: 1320px; }
-    }
-    ──────────────────────────────────────────────────────────── */
-  </style>
+                .mini-gallery-link:hover {
+                    border-color: var(--accent);
+                    box-shadow: 0 8px 32px rgba(123,140,255,0.15);
+                }
+
+            .mini-gallery {
+                display: flex;
+            }
+
+                .mini-gallery img {
+                    flex: 1;
+                    height: 110px;
+                    object-fit: cover;
+                    filter: brightness(0.8);
+                    transition: filter 0.3s;
+                    display: block;
+                }
+
+                    .mini-gallery img + img {
+                        border-left: 2px solid var(--bg-base);
+                    }
+
+            .mini-gallery-link:hover .mini-gallery img {
+                filter: brightness(1.05);
+            }
+
+            .mini-gallery-label {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0,0,0,0.5);
+                opacity: 0;
+                transition: opacity 0.3s;
+                pointer-events: none;
+            }
+
+                .mini-gallery-label span {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 700;
+                    font-size: 0.72rem;
+                    letter-spacing: 0.18em;
+                    text-transform: uppercase;
+                    background: var(--accent);
+                    color: #fff;
+                    padding: 6px 18px;
+                }
+
+            .mini-gallery-link:hover .mini-gallery-label {
+                opacity: 1;
+            }
+
+            /* ============================================================
+           PROFIL
+        ============================================================ */
+            .profil-top {
+                display: grid;
+                grid-template-columns: 260px 1fr;
+                gap: 4px;
+                margin-bottom: 36px;
+            }
+
+            .profil-photo {
+                width: 100%;
+                aspect-ratio: 1/1;
+                object-fit: cover;
+                object-position: top;
+                filter: grayscale(1) contrast(1.05);
+                display: block;
+                border: 1px solid var(--border);
+            }
+
+            .profil-bio {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                padding: 20px 22px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                transition: background 0.35s;
+            }
+
+                .profil-bio h2 {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 700;
+                    font-size: 0.88rem;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    margin-bottom: 10px;
+                }
+
+                .profil-bio p {
+                    font-size: 0.78rem;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+
+                    .profil-bio p strong {
+                        color: var(--text);
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 0.8rem;
+                    }
+
+            .social-icons {
+                display: flex;
+                gap: 10px;
+                margin-top: 16px;
+            }
+
+                .social-icons a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 36px;
+                    height: 36px;
+                    background: var(--surface);
+                    border: 1px solid var(--border);
+                    border-radius: 50%;
+                    color: var(--text);
+                    text-decoration: none;
+                    transition: border-color 0.3s, background 0.3s;
+                }
+
+                    .social-icons a svg {
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    .social-icons a:hover {
+                        border-color: var(--accent);
+                        background: var(--accent-dim);
+                    }
+
+            /* ── CV & REFERENCE BOOK ──────────────────────────────── */
+            .cv-section-title {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 0.82rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                background: var(--accent-dim);
+                border: 1px solid var(--accent);
+                color: var(--accent);
+                text-align: center;
+                padding: 10px;
+                margin-bottom: 16px;
+            }
+
+            /* ── CV & REFERENCE BOOK - Structure ──────────────────────────
+           ┌───────────────────┬───────────────────┬──────────────────────────────────────┐
+           │    CV FR (1/4)    │    CV EN (1/4)    │     Reference Book (2/4)             │
+           │  img 1414×2000px  │  img 1414×2000px  │  img 3508×2481px (ratio ≈ A4 inv.)   │
+           └───────────────────┴───────────────────┴──────────────────────────────────────┘
+
+           Principe :
+           • Le bloc entier fait 4 colonnes égales (1fr 1fr 1fr 1fr).
+           • CV FR et CV EN occupent chacun 1fr (= 1 quart).
+           • Reference Book occupe 2fr (= 2 quarts).
+           • La HAUTEUR est dictée par les images CV via aspect-ratio: 1414/2000.
+             Le navigateur calcule height = colonne_width × (2000/1414) automatiquement.
+           • Le Reference Book reprend cette même hauteur (grille = même row).
+             Son image (ratio ≈ 3508/2481 ≈ 1.414, quasi identique) est couverte
+             sans perte visible avec object-fit: cover.
+           • Aucune hauteur fixe, tout est fluide et responsive.
+        ──────────────────────────────────────────────────────────────── */
+
+            /* Grille 4 colonnes égales, hauteur auto (imposée par le contenu) */
+            .cv-panels {
+                display: grid;
+                grid-template-columns: 1fr 1fr 2fr; /* FR | EN | RefBook */
+                gap: 4px;
+                margin-bottom: 8px;
+                align-items: stretch;
+            }
+
+            /* Le panneau gauche n'est plus nécessaire : les CV sont des colonnes directes */
+            /* On garde .cv-panel-left et .cv-panel-right comme wrappers transparents */
+            .cv-panel-left {
+                display: contents; /* les enfants participent directement à la grille parente */
+            }
+
+            .cv-panel-right {
+                display: contents;
+            }
+
+            /* Carte CV - laisse l'image imposer sa hauteur via aspect-ratio */
+            .cv-card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                text-decoration: none;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                cursor: pointer;
+                overflow: hidden;
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+                .cv-card:hover {
+                    border-color: var(--accent);
+                    box-shadow: 0 6px 24px rgba(123,140,255,0.15);
+                }
+
+            .cv-lang {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 0.65rem;
+                letter-spacing: 0.18em;
+                background: var(--surface2);
+                border-bottom: 1px solid var(--border);
+                padding: 6px 10px;
+                text-align: center;
+                color: var(--muted);
+                flex-shrink: 0;
+            }
+
+            /* Image CV : ratio A4 exact (1414×2000).
+           width:100% + aspect-ratio → la hauteur se calcule automatiquement.
+           object-fit:cover conserve le haut du document visible. */
+            .cv-thumb {
+                width: 100%;
+                display: block;
+                aspect-ratio: 1414 / 2000;
+                object-fit: cover;
+                object-position: top center;
+                filter: brightness(0.9);
+                transition: filter 0.3s;
+            }
+
+            /* Le Reference Book est dans la même ligne de grille → même hauteur automatique.
+           Son image (3508×2481 ≈ ratio 1.414) couvre le conteneur sans perte visible. */
+            .cv-panel-right .cv-thumb {
+                aspect-ratio: unset; /* libère le ratio fixe pour laisser CSS stretch */
+                height: 100%; /* remplit la hauteur imposée par les CV voisins  */
+                object-fit: cover;
+                object-position: center center;
+            }
+
+            .cv-card:hover .cv-thumb {
+                filter: brightness(1.05);
+            }
+
+            .cv-overlay {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0,0,0,0.62);
+                opacity: 0;
+                transition: opacity 0.3s;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.68rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #fff;
+                flex-direction: column;
+                gap: 6px;
+                padding: 8px;
+                text-align: center;
+            }
+
+            .cv-card:hover .cv-overlay {
+                opacity: 1;
+            }
+
+            .cv-overlay span {
+                background: var(--accent);
+                padding: 5px 12px;
+                display: block;
+            }
+
+            .cv-note {
+                text-align: center;
+                font-size: 0.7rem;
+                font-style: italic;
+                color: var(--muted);
+                margin-top: 6px;
+            }
+
+            /* Galerie photos */
+            .photo-gallery {
+                display: grid;
+                grid-template-columns: 1fr 2fr 1fr;
+                gap: 4px;
+                margin-top: 36px;
+            }
+
+                .photo-gallery .col-center {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+                }
+
+                .photo-gallery img {
+                    width: 100%;
+                    object-fit: cover;
+                    filter: grayscale(1) brightness(0.75);
+                    border: 1px solid var(--border);
+                    display: block;
+                }
+
+                .photo-gallery .col-side {
+                    background: var(--surface);
+                    border: 1px solid var(--border);
+                }
+
+            /* ============================================================
+           FOOTER
+        ============================================================ */
+            footer {
+                width: 100%;
+                border-top: 1px solid var(--border);
+                transition: background-color 0.35s ease;
+            }
+
+            .footer-inner {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 28px 48px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .footer-brand h2 {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 0.9rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                background: var(--accent);
+                color: #fff;
+                padding: 4px 10px;
+                display: inline-block;
+            }
+
+            .footer-brand p {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.68rem;
+                letter-spacing: 0.2em;
+                color: var(--muted);
+                margin-top: 3px;
+                padding-left: 2px;
+            }
+
+            .back-top {
+                width: 44px;
+                height: 44px;
+                border: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text);
+                text-decoration: none;
+                font-size: 1.3rem;
+                transition: border-color 0.3s, background 0.3s;
+            }
+
+                .back-top:hover {
+                    border-color: var(--accent);
+                    background: var(--accent-dim);
+                }
+
+            /* ============================================================
+           MODALE PDF
+        ============================================================ */
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.9);
+                z-index: 500;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+                .modal-overlay.active {
+                    display: flex;
+                }
+
+            .modal-box {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                width: min(90vw, 820px);
+                max-height: 90vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 20px;
+                border-bottom: 1px solid var(--border);
+            }
+
+                .modal-header span {
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 0.78rem;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    color: var(--muted);
+                }
+
+            .modal-close {
+                background: none;
+                border: none;
+                color: var(--text);
+                font-size: 1.4rem;
+                cursor: pointer;
+                line-height: 1;
+            }
+
+            .modal-body {
+                flex: 1;
+                overflow: hidden;
+            }
+
+                .modal-body iframe {
+                    width: 100%;
+                    height: 75vh;
+                    border: none;
+                }
+
+            .modal-footer {
+                padding: 12px 20px;
+                border-top: 1px solid var(--border);
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+            }
+
+            .btn {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.72rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                padding: 8px 20px;
+                cursor: pointer;
+                border: 1px solid var(--text);
+                background: none;
+                color: var(--text);
+                text-decoration: none;
+                transition: background 0.3s, color 0.3s;
+            }
+
+                .btn:hover {
+                    background: var(--text);
+                    color: var(--bg-base);
+                }
+
+            .btn-accent {
+                background: var(--accent);
+                border-color: var(--accent);
+                color: #fff;
+            }
+
+                .btn-accent:hover {
+                    background: #9aaaff;
+                    border-color: #9aaaff;
+                    color: #fff;
+                }
+
+            /* ============================================================
+           RESPONSIVE - MOBILE (≤ 700px)
+        ============================================================ */
+            @media (max-width: 700px) {
+
+                :root {
+                    --section-gap: 40px;
+                }
+
+                .header-inner {
+                    padding: 12px 16px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 10px;
+                }
+
+                nav {
+                    width: 100%;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                }
+
+                    nav a.nav-link {
+                        padding: 6px 12px;
+                        font-size: 0.68rem;
+                    }
+
+                .nav-sep {
+                    display: none;
+                }
+
+                .section-inner {
+                    padding: var(--section-gap) 16px;
+                }
+
+                .footer-inner {
+                    padding: 20px 16px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 14px;
+                }
+
+                .section-title {
+                    font-size: 0.78rem;
+                    padding: 6px 16px;
+                }
+
+                /* Projets 1 colonne */
+                .projects-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .mini-gallery img {
+                    height: 70px;
+                }
+
+                /* Profil empilé */
+                .profil-top {
+                    grid-template-columns: 1fr;
+                }
+
+                .profil-photo {
+                    aspect-ratio: 3/2;
+                }
+
+                .profil-bio {
+                    padding: 16px;
+                }
+
+                /* CV : empilés verticalement sur mobile
+             display:contents est désactivé → on rétablit des blocs normaux */
+                .cv-panels {
+                    grid-template-columns: 1fr 1fr; /* FR | EN sur une ligne */
+                    gap: 4px;
+                }
+
+                .cv-panel-left {
+                    display: contents;
+                }
+                /* FR et EN restent dans la grille */
+                .cv-panel-right {
+                    display: block;
+                    grid-column: 1 / -1; /* Reference Book pleine largeur */
+                }
+                    /* Sur mobile le Reference Book reprend son ratio d'image */
+                    .cv-panel-right .cv-thumb {
+                        height: auto;
+                        aspect-ratio: 1414 / 2000; /* même ratio que les CV */
+                    }
+
+                /* Galerie : colonne centrale uniquement */
+                .photo-gallery {
+                    grid-template-columns: 1fr;
+                }
+
+                    .photo-gallery .col-side {
+                        display: none;
+                    }
+
+                    .photo-gallery img {
+                        height: 150px !important;
+                    }
+            }
+
+            /* ── Tablette (701–900px) ── */
+            @media (min-width: 701px) and (max-width: 900px) {
+                .section-inner {
+                    padding: calc(var(--section-gap) * 0.8) 28px;
+                }
+            }
+    </style>
 </head>
 
 <body>
 
-  <!-- ==============================================================
-       HEADER — bg-base (section impaire)
-  ============================================================== -->
-  <header class="bg-base">
-    <div class="header-inner">
-      <div class="header-brand">
-        <h1>Junior Level Designer</h1>
-        <p>Marius Queulin</p>
-      </div>
-
-      <nav>
-        <!-- Les ancres pointent vers les .section-wrap (bordure haute de chaque section)
-             scroll-padding-top compense le header sticky pour un alignement parfait -->
-        <a href="#wrap-projets" class="nav-link">
-          <span class="t-fr">Projets</span>
-          <span class="t-en">Projects</span>
-        </a>
-        <a href="#wrap-profil" class="nav-link">
-          <span class="t-fr">Profil</span>
-          <span class="t-en">Profile</span>
-        </a>
-        <div class="nav-sep"></div>
-        <div class="lang-toggle" role="group" aria-label="Langue / Language">
-          <button id="btn-fr" class="active" aria-pressed="true">FR</button>
-          <button id="btn-en" aria-pressed="false">EN</button>
-        </div>
-        <button class="theme-toggle" id="themeBtn" aria-label="Changer le thème">
-          <span class="icon-moon">🌙</span>
-          <span class="icon-sun">☀️</span>
-        </button>
-      </nav>
-    </div>
-  </header>
-
-
-  <!-- ==============================================================
-       SECTION DEMOREEL — bg-alt (section paire)
-       ─────────────────────────────────────────────────────────────
-       VIDÉO YOUTUBE — Erreur 153 / "configuration du lecteur" :
-       Cette erreur se produit quand la vidéo est lue depuis un fichier
-       local (file://) ou un domaine non autorisé par le propriétaire
-       de la vidéo. Solutions :
-         1. Ouvrir index.html via un serveur local (ex: Live Server dans
-            VS Code, ou "python -m http.server 8000" dans le terminal)
-         2. Ou utiliser le paramètre "origin=" dans l'URL YouTube embed
-            (remplacez VOTRE_DOMAINE par votre vrai domaine une fois hébergé)
-  ============================================================== -->
-  <div class="section-wrap bg-alt" id="wrap-demoreel">
-    <div class="section-inner">
-      <section id="demoreel">
-        <span class="section-title">
-          <span class="t-fr">Demoreel 2025</span>
-          <span class="t-en">Demo Reel 2025</span>
-        </span>
-
-        <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/J1c7Rca3tqk?si=IDIZiIppOrp7Snvy"
-            title="DEMOREEL 2025 – Junior Level Designer – Marius Queulin"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-          </iframe>
-        </div>
-
-        <p class="video-meta t-fr">Voix : EN &nbsp;|&nbsp; Sous-titres : FR</p>
-        <p class="video-meta t-en">Voice : EN &nbsp;|&nbsp; Subtitles : FR</p>
-      </section>
-    </div>
-  </div>
-
-
-  <!-- ==============================================================
-       SECTION PROJETS — bg-base (section impaire)
-  ============================================================== -->
-  <div class="section-wrap bg-base" id="wrap-projets">
-    <div class="section-inner">
-      <section id="projets">
-        <span class="section-title">
-          <span class="t-fr">Projets</span>
-          <span class="t-en">Projects</span>
-        </span>
-
-        <div class="projects-grid">
-
-          <a class="project-card" href="#projet-big-cop">
-            <img class="cover" src="images/big-cop.png" alt="Big Cop Big Moto" />
-            <div class="project-tag">Level Design</div>
-            <div class="project-info">
-              <h3>Big Cop Big Moto</h3>
-              <p class="t-fr">En tant que hors-la-loi, échappez à la police en empruntant des chemins risqués à travers une ville post-apocalyptique</p>
-              <p class="t-en">As an outlaw, escape the police by taking dangerous shortcuts through a post-apocalyptic city</p>
-            </div>
-          </a>
-
-          <a class="project-card" href="#projet-terminus">
-            <img class="cover" src="images/terminus.jpg" alt="Terminus" />
-            <div class="project-tag">Level Design – Game Design – Superviseur Sound Design</div>
-            <div class="project-info">
-              <h3>Terminus</h3>
-              <p class="t-fr">1968. Sous les rues de Paris, une horreur s'éveille. Plongez dans les tunnels du métro infesté et empêchez l'inimaginable de remonter à la lumière</p>
-              <p class="t-en">1968. Beneath the streets of Paris, a horror awakens. Dive into the infested metro tunnels and prevent the unthinkable from returning to the light</p>
-            </div>
-          </a>
-
-          <a class="project-card" href="#projet-breaking-point">
-            <img class="cover" src="images/bp.png" alt="Breaking Point" />
-            <div class="project-tag">Level Design – Lead Game Design – Sound Design</div>
-            <div class="project-info">
-              <h3>Breaking Point</h3>
-              <p class="t-fr">Dans une mégalopole dystopique, un taxi IA piraté commence à penser par lui-même. Qui est au volant… et jusqu'où ira-t-il&nbsp;?</p>
-              <p class="t-en">In a dystopian megalopolis, a hacked AI taxi starts thinking for itself. Who's driving… and how far will it go?</p>
-            </div>
-          </a>
-
-          <a class="project-card" href="#projet-jail">
-            <img class="cover" src="images/jail.jpg" alt="Jail" />
-            <div class="project-tag">Level Design – Game Design – Sound Design</div>
-            <div class="project-info">
-              <h3>Jail</h3>
-              <p class="t-fr">Perdu dans une prison oubliée, découvre des pouvoirs enfouis en toi. Entre force et esprit, trouve l'équilibre pour t'échapper</p>
-              <p class="t-en">Lost in a forgotten prison, discover powers buried within you. Between strength and spirit, find the balance to escape</p>
-            </div>
-          </a>
-
-        </div>
-
-        <a class="mini-gallery-link" href="#projets-mini">
-          <div class="mini-gallery">
-            <img src="images/mini1.jpg" alt="Mini projet 1" />
-            <img src="images/mini2.jpg" alt="Mini projet 2" />
-            <img src="images/mini3.jpg" alt="Mini projet 3" />
-            <img src="images/mini4.jpg" alt="Mini projet 4" />
-            <img src="images/mini5.jpg" alt="Mini projet 5" />
-          </div>
-          <div class="mini-gallery-label">
-            <span class="t-fr">Voir plus →</span>
-            <span class="t-en">See more →</span>
-          </div>
-        </a>
-
-      </section>
-    </div>
-  </div>
-
-
-  <!-- ==============================================================
-       SECTION PROFIL — bg-alt (section paire)
-  ============================================================== -->
-  <div class="section-wrap bg-alt" id="wrap-profil">
-    <div class="section-inner">
-      <section id="profil">
-        <span class="section-title">
-          <span class="t-fr">Profil</span>
-          <span class="t-en">Profile</span>
-        </span>
-
-        <div class="profil-top">
-          <img class="profil-photo" src="images/portrait.JPG" alt="Marius Queulin" />
-
-          <div class="profil-bio">
-            <div>
-              <h2 class="t-fr">Merci d'avoir regardé mon travail&nbsp;!</h2>
-              <h2 class="t-en">Thank you for checking out my work!</h2>
-              <p class="t-fr"><strong>Comme vous avez pu le voir, j'aime explorer divers univers et expériences et j'en suis très motivé</strong></p>
-              <p class="t-fr">Disponible pour échanger sur LinkedIn ou via e-mail&nbsp;:</p>
-              <p class="t-en"><strong>As you've seen, I love exploring diverse universes and experiences, and I'm highly motivated to keep doing so</strong></p>
-              <p class="t-en">Available to connect on LinkedIn or by e-mail:</p>
+    <!-- ==============================================================
+         HEADER - bg-base (section impaire)
+    ============================================================== -->
+    <header class="bg-base">
+        <div class="header-inner">
+            <div class="header-brand">
+                <h1>Junior Level Designer</h1>
+                <p>Marius Queulin</p>
             </div>
 
-            <div class="social-icons">
-              <!-- LinkedIn — target="_blank" + rel="noopener" = ouvre dans nouvel onglet -->
-              <a href="https://www.linkedin.com/in/marius-queulin/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.37 4.26 5.44v6.3zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.23 0z"/>
-                </svg>
-              </a>
-              <!-- Itch.io — target="_blank" = nouvel onglet -->
-              <a href="https://marius-qln.itch.io/" target="_blank" rel="noopener noreferrer" aria-label="Itch.io">
-                <svg width="15" height="15" viewBox="0 0 245.37 220.8" fill="currentColor">
-                  <path d="M31.99 1.365C21.17 7.645.2 31.024.01 48.035v3.36c0 14.03 9.83 26.31 24.73 26.31 17.89 0 32.1-14.21 32.1-32.1 0 17.89 14.21 32.1 32.1 32.1 17.89 0 32.1-14.21 32.1-32.1 0 17.89 14.21 32.1 32.1 32.1 17.89 0 32.1-14.21 32.1-32.1 0 17.89 14.21 32.1 32.1 32.1 14.9 0 24.73-12.28 24.73-26.31v-3.36c-.19-17.01-21.16-40.39-31.98-46.67-5.37-2.43-24.57-3.37-61.63-3.25-37.06-.12-56.26.82-61.63 3.25zM87.55 65.69c-3.68 4.97-9.16 8.54-15.71 8.54-6.55 0-12.03-3.57-15.71-8.54C52.44 60.72 50 54.62 50 48.05c0 17.89-14.21 32.1-32.1 32.1 0 0 .65 100.59.65 117.13 0 16.54 14.21 23.52 32.1 23.52h147.95c17.89 0 32.1-6.98 32.1-23.52 0-16.54.65-117.13.65-117.13C213.46 80.15 199.25 65.94 199.25 48.05c0 6.57-2.44 12.67-6.13 17.64C189.44 70.66 183.96 74.23 177.41 74.23c-6.55 0-12.03-3.57-15.71-8.54C158.01 60.72 155.57 54.62 155.57 48.05c0 17.89-14.21 32.1-32.1 32.1-17.89 0-32.1-14.21-32.1-32.1 0 6.57-2.44 12.67-6.13 17.64h.31zM96.89 128.48c11.5-1.14 23.06-1.71 34.62-1.71s23.12.57 34.62 1.71c8.94.89 15.77 8.33 15.77 17.3v34.38c0 8.97-6.83 16.41-15.77 17.3-11.5 1.14-23.06 1.71-34.62 1.71s-23.12-.57-34.62-1.71c-8.94-.89-15.77-8.33-15.77-17.3v-34.38c0-8.97 6.83-16.41 15.77-17.3z"/>
-                </svg>
-              </a>
-              <!-- Email — obfusqué manuellement contre les bots :
-                   L'adresse est reconstituée en JS via data-user + data-domain.
-                   Les robots ne voient pas "mailto:" dans le HTML.            -->
-              <a href="#"
-                 class="email-link"
-                 data-user="marius.queulin"
-                 data-domain="gmail.com"
-                 aria-label="Email">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
-                </svg>
-              </a>
+            <nav>
+                <a href="#wrap-projets" class="nav-link">
+                    <span class="t-fr">Projets</span>
+                    <span class="t-en">Projects</span>
+                </a>
+                <a href="#wrap-profil" class="nav-link">
+                    <span class="t-fr">Profil</span>
+                    <span class="t-en">Profile</span>
+                </a>
+                <div class="nav-sep"></div>
+                <!-- Sélecteur de langue -->
+                <div class="lang-toggle" role="group" aria-label="Langue / Language">
+                    <button id="btn-fr" class="active" aria-pressed="true">FR</button>
+                    <button id="btn-en" aria-pressed="false">EN</button>
+                </div>
+                <!-- Toggle thème -->
+                <button class="theme-toggle" id="themeBtn" aria-label="Changer le thème">
+                    <span class="icon-moon">🌙</span>
+                    <span class="icon-sun">☀️</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- ==============================================================
+         SECTION DEMOREEL - bg-alt (section paire)
+         Remplacez VIDEO_ID par votre identifiant YouTube
+    ============================================================== -->
+    <div class="section-wrap bg-alt" id="wrap-demoreel">
+        <div class="section-inner">
+            <section id="demoreel">
+                <span class="section-title">
+                    <span class="t-fr">Demoreel 2025</span>
+                    <span class="t-en">Demo Reel 2025</span>
+                </span>
+
+                <div class="video-wrapper">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/J1c7Rca3tqk?si=IDIZiIppOrp7Snvy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                </div>
+
+                <p class="video-meta t-fr">Voix : EN &nbsp;|&nbsp; Sous-titres : FR</p>
+                <p class="video-meta t-en">Voice : EN &nbsp;|&nbsp; Subtitles : FR</p>
+            </section>
+        </div>
+    </div>
+
+
+    <!-- ==============================================================
+         SECTION PROJETS - bg-base (section impaire)
+         Chaque carte est un <a> cliquable.
+         Remplacez href="#projet-NOM" par votre vraie URL.
+    ============================================================== -->
+    <div class="section-wrap bg-base" id="wrap-projets">
+        <div class="section-inner">
+            <section id="projets">
+                <span class="section-title">
+                    <span class="t-fr">Projets</span>
+                    <span class="t-en">Projects</span>
+                </span>
+
+                <div class="projects-grid">
+
+                    <!-- Big Cop Big Moto -->
+                    <a class="project-card" href="#projet-big-cop">
+                        <img class="cover" src="images/big-cop.png" alt="Big Cop Big Moto" />
+                        <div class="project-tag">Level Design</div>
+                        <div class="project-info">
+                            <h3>Big Cop Big Moto</h3>
+                            <p class="t-fr">En tant que hors-la-loi, échappez à la police en empruntant des chemins risqués à travers une ville post-apocalyptique</p>
+                            <p class="t-en">As an outlaw, escape the police by taking dangerous shortcuts through a post-apocalyptic city</p>
+                        </div>
+                    </a>
+
+                    <!-- Terminus -->
+                    <a class="project-card" href="#projet-terminus">
+                        <img class="cover" src="images/terminus.jpg" alt="Terminus" />
+                        <div class="project-tag">Level Design – Game Design – Superviseur Sound Design</div>
+                        <div class="project-info">
+                            <h3>Terminus</h3>
+                            <p class="t-fr">1968. Sous les rues de Paris, une horreur s'éveille. Plongez dans les tunnels du métro infesté et empêchez l'inimaginable de remonter à la lumière</p>
+                            <p class="t-en">1968. Beneath the streets of Paris, a horror awakens. Dive into the infested metro tunnels and prevent the unthinkable from returning to the light</p>
+                        </div>
+                    </a>
+
+                    <!-- Breaking Point -->
+                    <a class="project-card" href="#projet-breaking-point">
+                        <img class="cover" src="images/bp.png" alt="Breaking Point" />
+                        <div class="project-tag">Level Design – Lead Game Design – Sound Design</div>
+                        <div class="project-info">
+                            <h3>Breaking Point</h3>
+                            <p class="t-fr">Dans une mégalopole dystopique, un taxi IA piraté commence à penser par lui-même. Qui est au volant… et jusqu'où ira-t-il&nbsp;?</p>
+                            <p class="t-en">In a dystopian megalopolis, a hacked AI taxi starts thinking for itself. Who's driving… and how far will it go?</p>
+                        </div>
+                    </a>
+
+                    <!-- Jail -->
+                    <a class="project-card" href="#projet-jail">
+                        <img class="cover" src="images/jail.jpg" alt="Jail" />
+                        <div class="project-tag">Level Design – Game Design – Sound Design</div>
+                        <div class="project-info">
+                            <h3>Jail</h3>
+                            <p class="t-fr">Perdu dans une prison oubliée, découvre des pouvoirs enfouis en toi. Entre force et esprit, trouve l'équilibre pour t'échapper</p>
+                            <p class="t-en">Lost in a forgotten prison, discover powers buried within you. Between strength and spirit, find the balance to escape</p>
+                        </div>
+                    </a>
+
+                </div>
+
+                <!-- Mini-galerie – UN seul conteneur cliquable
+                     Remplacez href="#projets-mini" par votre URL -->
+                <a class="mini-gallery-link" href="#projets-mini">
+                    <div class="mini-gallery">
+                        <img src="images/mini1.jpg" alt="Mini projet 1" />
+                        <img src="images/mini2.jpg" alt="Mini projet 2" />
+                        <img src="images/mini3.jpg" alt="Mini projet 3" />
+                        <img src="images/mini4.jpg" alt="Mini projet 4" />
+                        <img src="images/mini5.jpg" alt="Mini projet 5" />
+                    </div>
+                    <div class="mini-gallery-label">
+                        <span class="t-fr">Voir plus →</span>
+                        <span class="t-en">See more →</span>
+                    </div>
+                </a>
+
+            </section>
+        </div>
+    </div>
+
+
+    <!-- ==============================================================
+         SECTION PROFIL - bg-alt (section paire)
+    ============================================================== -->
+    <div class="section-wrap bg-alt" id="wrap-profil">
+        <div class="section-inner">
+            <section id="profil">
+                <span class="section-title">
+                    <span class="t-fr">Profil</span>
+                    <span class="t-en">Profile</span>
+                </span>
+
+                <div class="profil-top">
+
+                    <!-- Photo portrait – remplacez src -->
+                    <img class="profil-photo" src="images/portrait.jpg" alt="Marius Queulin" />
+
+                    <div class="profil-bio">
+                        <div>
+                            <h2 class="t-fr">Merci d'avoir regardé mon travail&nbsp;!</h2>
+                            <h2 class="t-en">Thank you for checking out my work!</h2>
+                            <p class="t-fr"><strong>Comme vous avez pu le voir, j'aime explorer divers univers et expériences et j'en suis très motivé</strong></p>
+                            <p class="t-fr">Disponible pour échanger sur LinkedIn ou via e-mail&nbsp;:</p>
+                            <p class="t-en"><strong>As you've seen, I love exploring diverse universes and experiences, and I'm highly motivated to keep doing so</strong></p>
+                            <p class="t-en">Available to connect on LinkedIn or by e-mail:</p>
+                        </div>
+
+                        <!-- Icônes réseaux – remplacez les href -->
+                        <div class="social-icons">
+                            <a href="https://www.linkedin.com/in/marius-queulin/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.37 4.26 5.44v6.3zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.23 0z" />
+                                </svg>
+                            </a>
+                            <a href="https://marius-qln.itch.io/" target="_blank" rel="noopener" aria-label="Itch.io">
+                                <svg width="16" height="16" viewBox="0 0 245.37 220.8" fill="currentColor">
+                                    <path d="M31.99 1.365C21.17 7.645.2 31.024.01 48.035v3.36c0 14.03 9.83 26.31 24.73 26.31 17.89 0 32.1-14.21 32.1-32.1 0 17.89 14.21 32.1 32.1 32.1 17.89 0 32.1-14.21 32.1-32.1 0 17.89 14.21 32.1 32.1 32.1 17.89 0 32.1-14.21 32.1-32.1 0 17.89 14.21 32.1 32.1 32.1 14.9 0 24.73-12.28 24.73-26.31v-3.36c-.19-17.01-21.16-40.39-31.98-46.67-5.37-2.43-24.57-3.37-61.63-3.25-37.06-.12-56.26.82-61.63 3.25zM87.55 65.69c-3.68 4.97-9.16 8.54-15.71 8.54-6.55 0-12.03-3.57-15.71-8.54C52.44 60.72 50 54.62 50 48.05c0 17.89-14.21 32.1-32.1 32.1 0 0 .65 100.59.65 117.13 0 16.54 14.21 23.52 32.1 23.52h147.95c17.89 0 32.1-6.98 32.1-23.52 0-16.54.65-117.13.65-117.13C213.46 80.15 199.25 65.94 199.25 48.05c0 6.57-2.44 12.67-6.13 17.64C189.44 70.66 183.96 74.23 177.41 74.23c-6.55 0-12.03-3.57-15.71-8.54C158.01 60.72 155.57 54.62 155.57 48.05c0 17.89-14.21 32.1-32.1 32.1-17.89 0-32.1-14.21-32.1-32.1 0 6.57-2.44 12.67-6.13 17.64h.31zM96.89 128.48c11.5-1.14 23.06-1.71 34.62-1.71s23.12.57 34.62 1.71c8.94.89 15.77 8.33 15.77 17.3v34.38c0 8.97-6.83 16.41-15.77 17.3-11.5 1.14-23.06 1.71-34.62 1.71s-23.12-.57-34.62-1.71c-8.94-.89-15.77-8.33-15.77-17.3v-34.38c0-8.97 6.83-16.41 15.77-17.3z" />
+                                </svg>
+                            </a>
+                            <a href="/cdn-cgi/l/email-protection#8cdac3d8dec9ccc9c1cdc5c0a2cfc3c1" aria-label="Email">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── CV & REFERENCE BOOK ──────────────────────────── -->
+                <div class="cv-section-title">
+                    <span class="t-fr">CV &amp; Reference Book</span>
+                    <span class="t-en">Resume &amp; Reference Book</span>
+                </div>
+
+                <!--
+                  Structure 4 quarts égaux (grille 1fr 1fr 2fr) :
+                  ┌───────────────────┬───────────────────┬────────────────────────────────────┐
+                  │    CV FR (1/4)    │    CV EN (1/4)    │      Reference Book (2/4)          │
+                  │  1414×2000 px     │  1414×2000 px     │  3508×2481 px (ratio ≈ A4 inv.)    │
+                  └───────────────────┴───────────────────┴────────────────────────────────────┘
+                  La hauteur est imposée par le ratio A4 des images CV (aspect-ratio: 1414/2000).
+                  Le Reference Book s'aligne automatiquement sur cette hauteur (même rangée grille).
+                -->
+                <div class="cv-panels">
+
+                    <!-- Panneau gauche : CV FR + EN -->
+                    <div class="cv-panel-left">
+
+                        <!-- CV FR (1/4) -->
+                        <a class="cv-card"
+                           href="pdfs/cv-fr.pdf"
+                           data-pdf="pdfs/cv-fr.pdf"
+                           data-title="CV – Français">
+                            <div class="cv-lang">FR</div>
+                            <img class="cv-thumb" src="images/cv-fr-thumb.jpg" alt="CV Français" />
+                            <div class="cv-overlay">
+                                <span class="t-fr">Aperçu &amp; Téléchargement</span>
+                                <span class="t-en">Preview &amp; Download</span>
+                            </div>
+                        </a>
+
+                        <!-- CV EN (2/4) -->
+                        <a class="cv-card"
+                           href="pdfs/cv-en.pdf"
+                           data-pdf="pdfs/cv-en.pdf"
+                           data-title="CV – English">
+                            <div class="cv-lang">EN</div>
+                            <img class="cv-thumb" src="images/cv-en-thumb.jpg" alt="CV English" />
+                            <div class="cv-overlay">
+                                <span class="t-fr">Aperçu &amp; Téléchargement</span>
+                                <span class="t-en">Preview &amp; Download</span>
+                            </div>
+                        </a>
+
+                    </div><!-- /cv-panel-left -->
+                    <!-- Panneau droit : Reference Book (3/4 + 4/4) -->
+                    <div class="cv-panel-right">
+
+                        <a class="cv-card"
+                           href="pdfs/reference-book.pdf"
+                           data-pdf="pdfs/reference-book.pdf"
+                           data-title="Reference Book – EN">
+                            <div class="cv-lang">EN - Reference Book</div>
+                            <img class="cv-thumb" src="images/refbook-thumb.jpg" alt="Reference Book" />
+                            <div class="cv-overlay">
+                                <span class="t-fr">Aperçu &amp; Téléchargement</span>
+                                <span class="t-en">Preview &amp; Download</span>
+                            </div>
+                        </a>
+
+                    </div><!-- /cv-panel-right -->
+
+                </div><!-- /cv-panels -->
+
+                <p class="cv-note t-fr">PDF téléchargeables – cliquez pour aperçu</p>
+                <p class="cv-note t-en">Downloadable PDFs – click to preview</p>
+
+                <!-- Galerie photos – remplacez les src -->
+                <div class="photo-gallery">
+                    <div class="col-side"></div>
+                    <div class="col-center">
+                        <img src="images/photo1.jpg" alt="Photo 1" style="height:190px;" />
+                        <img src="images/photo2.jpg" alt="Photo 2" style="height:190px;" />
+                        <img src="images/photo3.jpg" alt="Photo 3" style="height:190px;" />
+                    </div>
+                    <div class="col-side"></div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+
+    <!-- ==============================================================
+         FOOTER - bg-base (section impaire)
+    ============================================================== -->
+    <footer class="section-wrap bg-base">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h2>Technical Level Designer</h2>
+                <p>Marius Queulin</p>
             </div>
-          </div>
+            <a href="#wrap-demoreel" class="back-top" aria-label="Retour en haut">↑</a>
         </div>
+    </footer>
 
-        <!-- ── CV & REFERENCE BOOK ──────────────────────────── -->
-        <div class="cv-section-title">
-          <span class="t-fr">CV &amp; Reference Book</span>
-          <span class="t-en">Resume &amp; Reference Book</span>
+
+    <!-- ==============================================================
+         MODALE PDF
+    ============================================================== -->
+    <div class="modal-overlay" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span id="modalTitle">Aperçu PDF</span>
+                <button class="modal-close" id="modalCloseBtn" aria-label="Fermer">✕</button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdfFrame" title="Aperçu PDF"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="modalCloseBtnFooter">
+                    <span class="t-fr">Fermer</span>
+                    <span class="t-en">Close</span>
+                </button>
+                <a id="modalDownload" href="#" download class="btn btn-accent">
+                    <span class="t-fr">Télécharger</span>
+                    <span class="t-en">Download</span>
+                </a>
+            </div>
         </div>
-
-        <div class="cv-panels">
-
-          <div class="cv-panel-left">
-
-            <!-- CV FR (1/4) — data-pdf déclenche la modale via JS -->
-            <a class="cv-card"
-               href="pdfs/cv-fr.pdf"
-               data-pdf="pdfs/cv-fr.pdf"
-               data-title="CV – Français">
-              <div class="cv-lang">FR</div>
-              <img class="cv-thumb" src="images/cv-fr-thumb.jpg" alt="CV Français" />
-              <div class="cv-overlay">
-                <span class="t-fr">Aperçu &amp; Téléchargement</span>
-                <span class="t-en">Preview &amp; Download</span>
-              </div>
-            </a>
-
-            <!-- CV EN (2/4) -->
-            <a class="cv-card"
-               href="pdfs/cv-en.pdf"
-               data-pdf="pdfs/cv-en.pdf"
-               data-title="CV – English">
-              <div class="cv-lang">EN</div>
-              <img class="cv-thumb" src="images/cv-en-thumb.jpg" alt="CV English" />
-              <div class="cv-overlay">
-                <span class="t-fr">Aperçu &amp; Téléchargement</span>
-                <span class="t-en">Preview &amp; Download</span>
-              </div>
-            </a>
-
-          </div>
-
-          <div class="cv-panel-right">
-
-            <!-- Reference Book (3/4 + 4/4) -->
-            <a class="cv-card"
-               href="pdfs/reference-book.pdf"
-               data-pdf="pdfs/reference-book.pdf"
-               data-title="Reference Book – EN">
-              <div class="cv-lang">EN — Reference Book</div>
-              <img class="cv-thumb" src="images/refbook-thumb.jpg" alt="Reference Book" />
-              <div class="cv-overlay">
-                <span class="t-fr">Aperçu &amp; Téléchargement</span>
-                <span class="t-en">Preview &amp; Download</span>
-              </div>
-            </a>
-
-          </div>
-
-        </div>
-
-        <p class="cv-note t-fr">PDF téléchargeables – cliquez pour aperçu</p>
-        <p class="cv-note t-en">Downloadable PDFs – click to preview</p>
-
-        <div class="photo-gallery">
-          <div class="col-side"></div>
-          <div class="col-center">
-            <img src="images/photo1.jpg" alt="Photo 1" style="height:180px;" />
-            <img src="images/photo2.jpg" alt="Photo 2" style="height:180px;" />
-            <img src="images/photo3.jpg" alt="Photo 3" style="height:180px;" />
-          </div>
-          <div class="col-side"></div>
-        </div>
-
-      </section>
     </div>
-  </div>
 
 
-  <!-- ==============================================================
-       FOOTER — bg-base (section impaire)
-  ============================================================== -->
-  <footer class="section-wrap bg-base">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <h2>Technical Level Designer</h2>
-        <p>Marius Queulin</p>
-      </div>
-      <a href="#wrap-demoreel" class="back-top" aria-label="Retour en haut">↑</a>
-    </div>
-  </footer>
-
-
-  <!-- ==============================================================
-       MODALE PDF (aperçu + téléchargement dans un nouvel onglet)
-  ============================================================== -->
-  <div class="modal-overlay" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-box">
-      <div class="modal-header">
-        <span id="modalTitle">Aperçu PDF</span>
-        <button class="modal-close" id="modalCloseBtn" aria-label="Fermer">✕</button>
-      </div>
-      <div class="modal-body">
-        <iframe id="pdfFrame" title="Aperçu PDF"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" id="modalCloseBtnFooter">
-          <span class="t-fr">Fermer</span>
-          <span class="t-en">Close</span>
-        </button>
-        <!-- target="_blank" = téléchargement dans un nouvel onglet -->
-        <a id="modalDownload" href="#" download target="_blank" rel="noopener" class="btn btn-accent">
-          <span class="t-fr">Télécharger</span>
-          <span class="t-en">Download</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ==============================================================
-       JAVASCRIPT — addEventListener uniquement (pas d'onclick inline)
-  ============================================================== -->
-  <script>
-    /* ── THÈME DARK / LIGHT ─────────────────────────────────────────
-       Pourquoi le thème ne persistait pas ?
-       Le script Cloudflare (/cdn-cgi/...) qui était injecté sur certains
-       hébergeurs réécrivait le HTML et cassait l'ordre d'exécution des
-       scripts. En hébergeant le fichier directement (sans passer par
-       Cloudflare ou un CDN qui injecte du JS), le problème disparaît.
-       LocalStorage fonctionne uniquement via un serveur (http://),
-       pas en file:// local.
-    ──────────────────────────────────────────────────────────────── */
-    (function initTheme() {
-      try {
-        var saved = localStorage.getItem('mq-theme');
-        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    <!-- ==============================================================
+         JAVASCRIPT
+         Tous les handlers utilisent addEventListener (pas onclick)
+         pour être compatibles avec les environnements sandboxés.
+    ============================================================== -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        /* ────────────────────────────────────────────────────────────
+        THÈME DARK / LIGHT
+        Lit localStorage ou la préférence système au chargement,
+        puis bascule via le bouton.
+        ──────────────────────────────────────────────────────────── */
+        (function initTheme() {
+        const saved      = localStorage.getItem('mq-theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.setAttribute('data-theme',
-          saved || (systemDark ? 'dark' : 'light'));
-      } catch(e) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
-    })();
+        saved || (systemDark ? 'dark' : 'light'));
+        })();
 
-    document.getElementById('themeBtn').addEventListener('click', function() {
-      var html = document.documentElement;
-      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      try { localStorage.setItem('mq-theme', next); } catch(e) {}
-    });
+        document.getElementById('themeBtn').addEventListener('click', function() {
+        const html = document.documentElement;
+        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('mq-theme', next);
+        });
 
-    /* ── LANGUE FR / EN ─────────────────────────────────────────── */
-    (function initLang() {
-      try {
+        /* ────────────────────────────────────────────────────────────
+        LANGUE FR / EN
+        ──────────────────────────────────────────────────────────── */
+        (function initLang() {
         applyLang(localStorage.getItem('mq-lang') || 'fr', false);
-      } catch(e) {
-        applyLang('fr', false);
-      }
-    })();
+        })();
 
-    function applyLang(lang, save) {
-      var html = document.documentElement;
-      html.setAttribute('data-lang', lang);
-      html.setAttribute('lang', lang);
-      ['fr','en'].forEach(function(l) {
-        var btn = document.getElementById('btn-' + l);
+        function applyLang(lang, save) {
+        const html = document.documentElement;
+        html.setAttribute('data-lang', lang);
+        html.setAttribute('lang', lang);
+        ['fr','en'].forEach(l => {
+        const btn = document.getElementById('btn-' + l);
         btn.classList.toggle('active', l === lang);
         btn.setAttribute('aria-pressed', String(l === lang));
-      });
-      if (save) { try { localStorage.setItem('mq-lang', lang); } catch(e) {} }
-    }
+        });
+        if (save) localStorage.setItem('mq-lang', lang);
+        }
 
-    document.getElementById('btn-fr').addEventListener('click', function() { applyLang('fr', true); });
-    document.getElementById('btn-en').addEventListener('click', function() { applyLang('en', true); });
+        document.getElementById('btn-fr').addEventListener('click', () => applyLang('fr', true));
+        document.getElementById('btn-en').addEventListener('click', () => applyLang('en', true));
 
-    /* ── EMAIL ANTI-BOT ─────────────────────────────────────────────
-       L'adresse est stockée en deux attributs data- séparés.
-       Les bots cherchent "mailto:" dans le HTML — ils ne le trouvent pas.
-       Au clic, le JS reconstruit l'adresse et ouvre le client mail.
-       Remplacez data-user et data-domain avec votre vraie adresse.
-    ──────────────────────────────────────────────────────────────── */
-    document.querySelectorAll('.email-link').forEach(function(el) {
-      el.addEventListener('click', function(e) {
-        e.preventDefault();
-        var addr = this.dataset.user + '@' + this.dataset.domain;
-        window.open('mailto:' + addr, '_blank');
-      });
-    });
+        /* ────────────────────────────────────────────────────────────
+        MODALE PDF
+        Déclenchée par les cartes CV via data-pdf et data-title.
+        Plus d'onclick inline = compatible sandboxes / CSP stricte.
+        ──────────────────────────────────────────────────────────── */
+        function openModal(url, title) {
+        document.getElementById('modalTitle').textContent     = title;
+        document.getElementById('pdfFrame').src              = url;
+        document.getElementById('modalDownload').href        = url;
+        document.getElementById('modalDownload').download    = url.split('/').pop();
+        document.getElementById('pdfModal').classList.add('active');
+        }
 
-    /* ── MODALE PDF ──────────────────────────────────────────────── */
-    function openModal(url, title) {
-      document.getElementById('modalTitle').textContent  = title;
-      document.getElementById('pdfFrame').src            = url;
-      document.getElementById('modalDownload').href      = url;
-      document.getElementById('modalDownload').download  = url.split('/').pop();
-      document.getElementById('pdfModal').classList.add('active');
-    }
-    function closeModal() {
-      document.getElementById('pdfModal').classList.remove('active');
-      document.getElementById('pdfFrame').src = '';
-    }
+        function closeModal() {
+        document.getElementById('pdfModal').classList.remove('active');
+        document.getElementById('pdfFrame').src = '';
+        }
 
-    document.querySelectorAll('.cv-card[data-pdf]').forEach(function(card) {
-      card.addEventListener('click', function(e) {
+        /* Délégation d'événement sur toutes les cartes CV */
+        document.querySelectorAll('.cv-card[data-pdf]').forEach(function(card) {
+        card.addEventListener('click', function(e) {
         e.preventDefault();
         openModal(this.dataset.pdf, this.dataset.title);
-      });
-    });
-
-    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
-    document.getElementById('modalCloseBtnFooter').addEventListener('click', closeModal);
-    document.getElementById('pdfModal').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    /* ── ANIMATION AU SCROLL ─────────────────────────────────────── */
-    if ('IntersectionObserver' in window) {
-      var fadeObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity   = '1';
-            entry.target.style.transform = 'translateY(0)';
-            fadeObserver.unobserve(entry.target);
-          }
         });
-      }, { threshold: 0.05 });
+        });
 
-      document.querySelectorAll('.section-inner').forEach(function(el) {
+        /* Fermeture : boutons + overlay + Échap */
+        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        document.getElementById('modalCloseBtnFooter').addEventListener('click', closeModal);
+        document.getElementById('pdfModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+        });
+        document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+        });
+
+        /* ────────────────────────────────────────────────────────────
+        ANIMATION AU SCROLL (IntersectionObserver)
+        Fondu + montée douce pour chaque .section-wrap et section.
+        ──────────────────────────────────────────────────────────── */
+        const fadeObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+        entry.target.style.opacity   = '1';
+        entry.target.style.transform = 'translateY(0)';
+        fadeObserver.unobserve(entry.target); /* anime une seule fois */
+        }
+        });
+        }, { threshold: 0.06 });
+
+        document.querySelectorAll('.section-inner').forEach(function(el) {
         el.style.opacity    = '0';
-        el.style.transform  = 'translateY(20px)';
-        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        fadeObserver.observe(el);
-      });
-    }
-  </script>
-
-</body>
-</html>
+        el.style.transform  = 'translateY(2
