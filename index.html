@@ -70,6 +70,7 @@
 
             html {
                 scroll-behavior: smooth;
+                scroll-padding-top: 70px;
             }
 
             body {
@@ -82,31 +83,8 @@
                 position: relative;
             }
 
-        /* ── Vignettage : les croix s'estompent vers les bords ──────────
-               Un pseudo-élément fixed couvre toute la fenêtre avec un
-               dégradé radial transparent au centre → noir opaque aux bords.
-               pointer-events:none = n'interfère pas avec les clics.         
-            body::after {
-                content: '';
-                position: fixed;
-                inset: 0;
-                pointer-events: none;
-                z-index: 1;
-                background: radial-gradient(
-                    ellipse at 50% 50%,
-                    transparent 40%,
-                    rgba(0,0,0,0.55) 100%
-                );
-            }*/
 
-        /* En mode light la vignette est légèrement moins intense 
-            [data-theme="light"] body::after {
-                background: radial-gradient(
-                    ellipse at 50% 50%,
-                    transparent 40%,
-                    rgba(0,0,0,0.25) 100%
-                );
-            }*/
+        
 
             /* ============================================================
            COULEURS ALTERNÉES DES SECTIONS
@@ -123,14 +101,16 @@
             transition: background-color 0.35s ease;
             /* Motif crosshair (croix : barre verticale plus haute que l'horizontale)
                    dessiné en SVG inline encodé, répété en petit nuage de points.
-                   La vignette est sur body::after (voir ci-dessous). */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='9.5' y='6' width='1' height='8' fill='rgba(123%2C140%2C255%2C0.1)'/%3E%3Crect x='6' y='9.7' width='8' height='0.6' fill='rgba(123%2C140%2C255%2C0.1)'/%3E%3C/svg%3E");
-            background-size: 100px 100px;
+*/
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2040%2040%27%20width%3D%2780%27%20height%3D%2780%27%3E%3Ccircle%20cx%3D%2720%27%20cy%3D%2720%27%20r%3D%271.8%27%20fill%3D%27rgba(123%2C140%2C255%2C0.2)%27%2F%3E%3C%2Fsvg%3E");
+            background-size: 40px 40px;
+            background-attachment: fixed;
+            background-attachment: fixed;
         }
 
             /* Thème light : crosshair plus sombre */
         [data-theme="light"] .section-wrap {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Crect x='9.5' y='6' width='1' height='8' fill='rgba(90%2C106%2C255%2C0.15)'/%3E%3Crect x='6' y='9.7' width='8' height='0.6' fill='rgba(90%2C106%2C255%2C0.15)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2040%2040%27%20width%3D%2780%27%20height%3D%2780%27%3E%3Ccircle%20cx%3D%2720%27%20cy%3D%2720%27%20r%3D%271.8%27%20fill%3D%27rgba(90%2C106%2C255%2C0.4)%27%2F%3E%3C%2Fsvg%3E");
         }
                 /* Sections impaires : couleur de base */
                 .section-wrap.bg-base {
@@ -166,6 +146,9 @@
             }
 
             [data-theme="light"] header {
+                background-color: rgba(242,242,242,0.95);
+            }
+            [data-theme="light"] footer {
                 background-color: rgba(242,242,242,0.95);
             }
             
@@ -524,7 +507,7 @@
         ============================================================ */
             .profil-top {
                 display: grid;
-                grid-template-columns: 160px 1fr;
+                grid-template-columns: 220px 1fr;
                 gap: 4px;
                 margin-bottom: 36px;
             }
@@ -532,18 +515,17 @@
             .profil-photo {
                 width: 100%;
                 aspect-ratio: 1/1;
-                object-fit: contain;
+                object-fit: cover;
                 object-position: top center;
                 filter: grayscale(1) contrast(1.05);
                 display: block;
                 border: 1px solid var(--border);
-                background: var(--surface2);
-            }
+                            }
 
             .profil-bio {
                 background: var(--surface);
                 border: 1px solid var(--border);
-                padding: 14px 16px;
+                padding: 12px 14px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -774,12 +756,20 @@
 
             /* col-side dark : 3 radials noirs soft */
             .photo-gallery .col-side {
-                background: radial-gradient(ellipse 90% 60% at 20% 30%, #1f1f1f 0%, transparent 65%), radial-gradient(ellipse 70% 80% at 80% 70%, #161616 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 50% 50%, #141414 0%, transparent 100%), #0e0e0e;
+                background:
+                    radial-gradient(ellipse 85% 55% at 25% 35%, #222222 0%, transparent 62%),
+                    radial-gradient(ellipse 70% 75% at 78% 68%, #1a1a1a 0%, transparent 58%),
+                    radial-gradient(ellipse 55% 55% at 52% 52%, #181818 0%, transparent 100%),
+                    #111111;
                 border: 1px solid var(--border);
             }
             /* col-side light : 3 radials blancs soft */
             [data-theme="light"] .photo-gallery .col-side {
-                background: radial-gradient(ellipse 90% 60% at 20% 30%, #ffffff 0%, transparent 65%), radial-gradient(ellipse 70% 80% at 80% 70%, #f8f8f8 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 50% 50%, #f0f0f0 0%, transparent 100%), #ebebeb;
+                background:
+                    radial-gradient(ellipse 85% 55% at 25% 35%, #e2e2e2 0%, transparent 62%),
+                    radial-gradient(ellipse 70% 75% at 78% 68%, #d0d0d0 0%, transparent 58%),
+                    radial-gradient(ellipse 55% 55% at 52% 52%, #c8c8c8 0%, transparent 100%),
+                    #d4d4d4;
                 border: 1px solid var(--border);
             }
 
@@ -792,7 +782,7 @@
             transition: background-color 0.35s ease, border-color 0.35s ease;
             backdrop-filter: blur(12px);
             /* bg-base avec opacité pour le sticky blur */
-            background-color: rgba(14,14,14,0.93);
+            background-color: rgba(14,14,14,0.95);
         }
 
         .footer-inner {
@@ -960,7 +950,7 @@
                 .header-inner {
                     padding: 12px 16px;
                     flex-direction: column;
-                    align-items: flex-start;
+                    align-items: center;
                     gap: 10px;
                 }
 
@@ -986,7 +976,7 @@
                 .footer-inner {
                     padding: 20px 16px;
                     flex-direction: column;
-                    align-items: flex-start;
+                    align-items: center;
                     gap: 14px;
                 }
 
@@ -1067,7 +1057,7 @@
             /* ── Mobile : croix 40px ─────────────── */
             @media (max-width: 700px) {
                 .section-wrap {
-                background-size: 75px 75px !important;
+                background-size: 40px 40px!important;
                 }
             }
     </style>
@@ -1110,6 +1100,9 @@
     </header>
 
 
+
+    <!-- Anchor retour en haut : placé entre header et demoreel -->
+    <div id="top-anchor" style="height:0;overflow:hidden;" aria-hidden="true"></div>
     <!-- ==============================================================
          SECTION DEMOREEL - bg-alt (section paire)
          Remplacez VIDEO_ID par votre identifiant YouTube
@@ -1355,7 +1348,7 @@
         <div class="footer-inner">
             <div class="footer-brand">
             </div>
-            <a href="#wrap-demoreel" class="back-top" aria-label="Retour en haut">↑</a>
+            <a href="#top-anchor" class="back-top" aria-label="Retour en haut">↑</a>
         </div>
     </footer>
 
