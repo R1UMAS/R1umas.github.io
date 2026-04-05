@@ -79,6 +79,33 @@
                 line-height: 1.65;
                 transition: color 0.35s ease;
                 background-color: var(--bg-base); /* fallback */
+                position: relative;
+            }
+
+            /* ── Vignettage : les croix s'estompent vers les bords ──────────
+               Un pseudo-élément fixed couvre toute la fenêtre avec un
+               dégradé radial transparent au centre → noir opaque aux bords.
+               pointer-events:none = n'interfère pas avec les clics.         */
+            body::after {
+                content: '';
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 9999;
+                background: radial-gradient(
+                    ellipse at 50% 50%,
+                    transparent 40%,
+                    rgba(0,0,0,0.55) 100%
+                );
+            }
+
+            /* En mode light la vignette est légèrement moins intense */
+            [data-theme="light"] body::after {
+                background: radial-gradient(
+                    ellipse at 50% 50%,
+                    transparent 40%,
+                    rgba(0,0,0,0.25) 100%
+                );
             }
 
             /* ============================================================
@@ -92,9 +119,16 @@
             .section-wrap {
                 width: 100%;
                 transition: background-color 0.35s ease;
-                /* Motif de fond (placé ici pour s'appliquer à toute la largeur) */
-                background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-                background-size: 40px 40px;
+                /* Motif crosshair (croix : barre verticale plus haute que l'horizontale)
+                   dessiné en SVG inline encodé, répété en petit nuage de points.
+                   La vignette est sur body::after (voir ci-dessous). */
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect x='9.5' y='6' width='1' height='8' fill='rgba(123%2C140%2C255%2C0.18)'/%3E%3Crect x='6' y='9.7' width='8' height='0.6' fill='rgba(123%2C140%2C255%2C0.18)'/%3E%3C/svg%3E");
+                background-size: 20px 20px;
+            }
+
+            /* Thème light : crosshair plus sombre */
+            [data-theme="light"] .section-wrap {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect x='9.5' y='6' width='1' height='8' fill='rgba(90%2C106%2C255%2C0.20)'/%3E%3Crect x='6' y='9.7' width='8' height='0.6' fill='rgba(90%2C106%2C255%2C0.20)'/%3E%3C/svg%3E");
             }
                 /* Sections impaires : couleur de base */
                 .section-wrap.bg-base {
@@ -124,7 +158,7 @@
                 border-bottom: 1px solid var(--border);
                 transition: background-color 0.35s ease, border-color 0.35s ease;
                 /* bg-base avec opacité pour le sticky blur */
-                background-color: color-mix(in srgb, var(--bg-base) 93%, transparent);
+                background-color: rgba(14,14,14,0.93);
             }
 
             .header-inner {
@@ -481,7 +515,7 @@
         ============================================================ */
             .profil-top {
                 display: grid;
-                grid-template-columns: 260px 1fr;
+                grid-template-columns: 160px 1fr;
                 gap: 4px;
                 margin-bottom: 36px;
             }
@@ -489,17 +523,18 @@
             .profil-photo {
                 width: 100%;
                 aspect-ratio: 1/1;
-                object-fit: cover;
-                object-position: top;
+                object-fit: contain;
+                object-position: top center;
                 filter: grayscale(1) contrast(1.05);
                 display: block;
                 border: 1px solid var(--border);
+                background: var(--surface2);
             }
 
             .profil-bio {
                 background: var(--surface);
                 border: 1px solid var(--border);
-                padding: 20px 22px;
+                padding: 14px 16px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -531,16 +566,16 @@
 
             .social-icons {
                 display: flex;
-                gap: 10px;
-                margin-top: 16px;
+                gap: 8px;
+                margin-top: 10px;
             }
 
                 .social-icons a {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 36px;
-                    height: 36px;
+                    width: 28px;
+                    height: 28px;
                     background: var(--surface);
                     border: 1px solid var(--border);
                     border-radius: 50%;
@@ -1420,4 +1455,11 @@
 
         document.querySelectorAll('.section-inner').forEach(function(el) {
         el.style.opacity    = '0';
-        el.style.transform  = 'translateY(2
+        el.style.transform  = 'translateY(24px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        fadeObserver.observe(el);
+        });
+    </script>
+
+</body>
+</html>
