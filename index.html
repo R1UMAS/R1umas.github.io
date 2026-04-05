@@ -82,31 +82,31 @@
                 position: relative;
             }
 
-            /* ── Vignettage : les croix s'estompent vers les bords ──────────
+        /* ── Vignettage : les croix s'estompent vers les bords ──────────
                Un pseudo-élément fixed couvre toute la fenêtre avec un
                dégradé radial transparent au centre → noir opaque aux bords.
-               pointer-events:none = n'interfère pas avec les clics.         */
+               pointer-events:none = n'interfère pas avec les clics.         
             body::after {
                 content: '';
                 position: fixed;
                 inset: 0;
                 pointer-events: none;
-                z-index: 9999;
+                z-index: 1;
                 background: radial-gradient(
                     ellipse at 50% 50%,
                     transparent 40%,
                     rgba(0,0,0,0.55) 100%
                 );
-            }
+            }*/
 
-            /* En mode light la vignette est légèrement moins intense */
+        /* En mode light la vignette est légèrement moins intense 
             [data-theme="light"] body::after {
                 background: radial-gradient(
                     ellipse at 50% 50%,
                     transparent 40%,
                     rgba(0,0,0,0.25) 100%
                 );
-            }
+            }*/
 
             /* ============================================================
            COULEURS ALTERNÉES DES SECTIONS
@@ -116,20 +116,22 @@
         ============================================================ */
 
             /* Wrapper pleine largeur pour chaque section = permet bg qui déborde */
-            .section-wrap {
-                width: 100%;
-                transition: background-color 0.35s ease;
-                /* Motif crosshair (croix : barre verticale plus haute que l'horizontale)
+        .section-wrap {
+            z-index: 0;
+            position: relative;
+            width: 100%;
+            transition: background-color 0.35s ease;
+            /* Motif crosshair (croix : barre verticale plus haute que l'horizontale)
                    dessiné en SVG inline encodé, répété en petit nuage de points.
                    La vignette est sur body::after (voir ci-dessous). */
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect x='9.5' y='6' width='1' height='8' fill='rgba(123%2C140%2C255%2C0.18)'/%3E%3Crect x='6' y='9.7' width='8' height='0.6' fill='rgba(123%2C140%2C255%2C0.18)'/%3E%3C/svg%3E");
-                background-size: 20px 20px;
-            }
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='9.5' y='6' width='1' height='8' fill='rgba(123%2C140%2C255%2C0.1)'/%3E%3Crect x='6' y='9.7' width='8' height='0.6' fill='rgba(123%2C140%2C255%2C0.1)'/%3E%3C/svg%3E");
+            background-size: 100px 100px;
+        }
 
             /* Thème light : crosshair plus sombre */
-            [data-theme="light"] .section-wrap {
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect x='9.5' y='6' width='1' height='8' fill='rgba(90%2C106%2C255%2C0.20)'/%3E%3Crect x='6' y='9.7' width='8' height='0.6' fill='rgba(90%2C106%2C255%2C0.20)'/%3E%3C/svg%3E");
-            }
+        [data-theme="light"] .section-wrap {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Crect x='9.5' y='6' width='1' height='8' fill='rgba(90%2C106%2C255%2C0.15)'/%3E%3Crect x='6' y='9.7' width='8' height='0.6' fill='rgba(90%2C106%2C255%2C0.15)'/%3E%3C/svg%3E");
+        }
                 /* Sections impaires : couleur de base */
                 .section-wrap.bg-base {
                     background-color: var(--bg-base);
@@ -140,11 +142,13 @@
                 }
 
             /* Contenu centré dans la largeur max */
-            .section-inner {
-                max-width: 1100px;
-                margin: 0 auto;
-                padding: var(--section-gap) 48px;
-            }
+        .section-inner {
+            z-index: 2;
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: var(--section-gap) 48px;
+        }
 
             /* ============================================================
            HEADER
@@ -158,8 +162,13 @@
                 border-bottom: 1px solid var(--border);
                 transition: background-color 0.35s ease, border-color 0.35s ease;
                 /* bg-base avec opacité pour le sticky blur */
-                background-color: rgba(14,14,14,0.93);
+                background-color: rgba(14,14,14,0.95);
             }
+
+            [data-theme="light"] header {
+                background-color: rgba(242,242,242,0.95);
+            }
+            
 
             .header-inner {
                 max-width: 1100px;
@@ -680,15 +689,15 @@
             /* Image CV : ratio A4 exact (1414×2000).
            width:100% + aspect-ratio → la hauteur se calcule automatiquement.
            object-fit:cover conserve le haut du document visible. */
-            .cv-thumb {
-                width: 100%;
-                display: block;
-                aspect-ratio: 1414 / 2000;
-                object-fit: cover;
-                object-position: top center;
-                filter: brightness(0.9);
-                transition: filter 0.3s;
-            }
+        .cv-thumb {
+            width: 100%;
+            display: block;
+            aspect-ratio: 1414 / 2000;
+            object-fit: cover;
+            object-position: top center;
+            filter: brightness(0.9);
+            transition: filter 0.3s;
+        }
 
             /* Le Reference Book est dans la même ligne de grille → même hauteur automatique.
            Son image (3508×2481 ≈ ratio 1.414) couvre le conteneur sans perte visible. */
@@ -743,50 +752,62 @@
 
             /* Galerie photos */
             .photo-gallery {
-                display: grid;
-                grid-template-columns: 1fr 2fr 1fr;
-                gap: 4px;
-                margin-top: 36px;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 4px;
+            margin-top: 36px;
             }
 
-                .photo-gallery .col-center {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 4px;
-                }
+            .photo-gallery .col-center {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
 
-                .photo-gallery img {
-                    width: 100%;
-                    object-fit: cover;
-                    filter: grayscale(1) brightness(0.75);
-                    border: 1px solid var(--border);
-                    display: block;
-                }
+            .photo-gallery img {
+                width: 100%;
+                object-fit: cover;
+                filter: grayscale(1) brightness(0.75);
+                border: 1px solid var(--border);
+                display: block;
+            }
 
-                .photo-gallery .col-side {
-                    background: var(--surface);
-                    border: 1px solid var(--border);
-                }
+            /* col-side dark : 3 radials noirs soft */
+            .photo-gallery .col-side {
+                background: radial-gradient(ellipse 90% 60% at 20% 30%, #1f1f1f 0%, transparent 65%), radial-gradient(ellipse 70% 80% at 80% 70%, #161616 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 50% 50%, #141414 0%, transparent 100%), #0e0e0e;
+                border: 1px solid var(--border);
+            }
+            /* col-side light : 3 radials blancs soft */
+            [data-theme="light"] .photo-gallery .col-side {
+                background: radial-gradient(ellipse 90% 60% at 20% 30%, #ffffff 0%, transparent 65%), radial-gradient(ellipse 70% 80% at 80% 70%, #f8f8f8 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 50% 50%, #f0f0f0 0%, transparent 100%), #ebebeb;
+                border: 1px solid var(--border);
+            }
 
             /* ============================================================
            FOOTER
         ============================================================ */
             footer {
-                width: 100%;
-                border-top: 1px solid var(--border);
-                transition: background-color 0.35s ease;
-            }
+            width: 100%;
+            border-top: 1px solid var(--border);
+            transition: background-color 0.35s ease, border-color 0.35s ease;
+            backdrop-filter: blur(12px);
+            /* bg-base avec opacité pour le sticky blur */
+            background-color: rgba(14,14,14,0.93);
+        }
 
-            .footer-inner {
-                max-width: 1100px;
-                margin: 0 auto;
-                padding: 28px 48px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
+        .footer-inner {
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 28px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-            .footer-brand h2 {
+        /* .footer-brand h2 {
+            <h2>Junior Level Designer</h2>
+<p>Marius Queulin</p>
                 font-family: 'Montserrat', sans-serif;
                 font-weight: 700;
                 font-size: 0.9rem;
@@ -805,7 +826,7 @@
                 color: var(--muted);
                 margin-top: 3px;
                 padding-left: 2px;
-            }
+            }*/
 
             .back-top {
                 width: 44px;
@@ -988,8 +1009,13 @@
                     grid-template-columns: 1fr;
                 }
 
+                /* Photo réduite sur mobile : hauteur max 200px */
                 .profil-photo {
-                    aspect-ratio: 3/2;
+                    aspect-ratio: unset;
+                    max-height: 200px;
+                    width: auto;
+                    margin: 0 auto;
+                    display: block;
                 }
 
                 .profil-bio {
@@ -1011,10 +1037,11 @@
                     display: block;
                     grid-column: 1 / -1; /* Reference Book pleine largeur */
                 }
-                    /* Sur mobile le Reference Book reprend son ratio d'image */
+                    /* Ref Book mobile : hauteur divisée par 2 (ratio 2× plus large) */
                     .cv-panel-right .cv-thumb {
                         height: auto;
-                        aspect-ratio: 1414 / 2000; /* même ratio que les CV */
+                        aspect-ratio: 2828 / 2000;
+                        transform: none; /* pas de zoom sur mobile */
                     }
 
                 /* Galerie : colonne centrale uniquement */
@@ -1035,6 +1062,12 @@
             @media (min-width: 701px) and (max-width: 900px) {
                 .section-inner {
                     padding: calc(var(--section-gap) * 0.8) 28px;
+                }
+            }
+            /* ── Mobile : croix 40px ─────────────── */
+            @media (max-width: 700px) {
+                .section-wrap {
+                background-size: 75px 75px !important;
                 }
             }
     </style>
@@ -1321,12 +1354,11 @@
     <footer class="section-wrap bg-base">
         <div class="footer-inner">
             <div class="footer-brand">
-                <h2>Technical Level Designer</h2>
-                <p>Marius Queulin</p>
             </div>
             <a href="#wrap-demoreel" class="back-top" aria-label="Retour en haut">↑</a>
         </div>
     </footer>
+
 
 
     <!-- ==============================================================
