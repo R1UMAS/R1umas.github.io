@@ -777,13 +777,15 @@
            FOOTER
         ============================================================ */
             footer {
-            width: 100%;
-            border-top: 1px solid var(--border);
-            transition: background-color 0.35s ease, border-color 0.35s ease;
-            backdrop-filter: blur(12px);
-            /* bg-base avec opacité pour le sticky blur */
-            background-color: rgba(14,14,14,0.95);
-        }
+                width: 100%;
+                position: relative;
+                z-index: 100;
+                border-top: 1px solid var(--border);
+                background-color: rgba(14,14,14,0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                transition: background-color 0.35s ease, border-color 0.35s ease;
+            }
 
         .footer-inner {
             z-index: 2;
@@ -1344,7 +1346,7 @@
     <!-- ==============================================================
          FOOTER - bg-base (section impaire)
     ============================================================== -->
-    <footer class="section-wrap bg-base">
+    <footer>
         <div class="footer-inner">
             <div class="footer-brand">
             </div>
