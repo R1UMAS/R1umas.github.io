@@ -1,0 +1,591 @@
+/* ============================================================
+   index.css — Styles spécifiques à index.html uniquement
+   Demoreel, Projets, Profil, CV, Modal, Galerie, Responsive
+   ============================================================ */
+/* ============================================================
+           DEMOREEL
+        ============================================================ */
+            #demoreel {
+                text-align: center;
+            }
+
+            .video-wrapper {
+                position: relative;
+                width: 100%;
+                max-width: 700px;
+                margin: 0 auto;
+                aspect-ratio: 16/9;
+                background: #000;
+                border: 1px solid var(--border);
+            }
+
+                .video-wrapper iframe {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                }
+
+            .video-meta {
+                margin-top: 10px;
+                font-size: 0.75rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+            }
+
+            /* ============================================================
+           PROJETS
+        ============================================================ */
+            .projects-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4px;
+            }
+
+            .project-card {
+                position: relative;
+                overflow: hidden;
+                display: block;
+                text-decoration: none;
+                color: inherit;
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                cursor: pointer;
+                transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .project-card:hover {
+                    border-color: var(--accent);
+                    transform: scale(1.015);
+                    box-shadow: 0 8px 32px rgba(123,140,255,0.15);
+                }
+
+                .project-card::after {
+                    content: '→';
+                    position: absolute;
+                    top: 12px;
+                    right: 14px;
+                    font-size: 1.2rem;
+                    color: #fff;
+                    opacity: 0;
+                    transform: translateX(-6px);
+                    transition: opacity 0.25s, transform 0.25s;
+                    pointer-events: none;
+                    z-index: 2;
+                    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+                }
+
+                .project-card:hover::after {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+
+                .project-card .cover {
+                    width: 100%;
+                    aspect-ratio: 16/9;
+                    object-fit: cover;
+                    display: block;
+                    filter: brightness(0.85);
+                    transition: filter 0.3s ease;
+                }
+
+                .project-card:hover .cover {
+                    filter: brightness(1);
+                }
+
+            .project-tag {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.58rem;
+                letter-spacing: 0.14em;
+                color: var(--muted);
+                text-transform: uppercase;
+                text-align: center;
+                padding: 6px 8px;
+                border-top: 1px solid var(--border);
+                background: var(--surface2);
+            }
+
+            .project-info {
+                padding: 14px 16px 18px;
+                border-top: 1px solid var(--border);
+            }
+
+                .project-info h3 {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 600;
+                    font-size: 0.8rem;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    margin-bottom: 6px;
+                    color: var(--text);
+                }
+
+                .project-info p {
+                    font-size: 0.78rem;
+                    color: var(--muted);
+                    text-align: center;
+                }
+
+            /* Mini-galerie – UN seul conteneur cliquable */
+            .mini-gallery-link {
+                display: block;
+                text-decoration: none;
+                color: inherit;
+                position: relative;
+                margin-top: 4px;
+                border: 1px solid var(--border);
+                overflow: hidden;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .mini-gallery-link:hover {
+                    border-color: var(--accent);
+                    box-shadow: 0 8px 32px rgba(123,140,255,0.15);
+                }
+
+            .mini-gallery {
+                display: flex;
+            }
+
+                .mini-gallery img {
+                    flex: 1;
+                    height: 110px;
+                    object-fit: cover;
+                    filter: brightness(0.8);
+                    transition: filter 0.3s;
+                    display: block;
+                }
+
+                    .mini-gallery img + img {
+                        border-left: 2px solid var(--bg-base);
+                    }
+
+            .mini-gallery-link:hover .mini-gallery img {
+                filter: brightness(1.05);
+            }
+
+            .mini-gallery-label {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0,0,0,0.5);
+                opacity: 0;
+                transition: opacity 0.3s;
+                pointer-events: none;
+            }
+
+                .mini-gallery-label span {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 700;
+                    font-size: 0.72rem;
+                    letter-spacing: 0.18em;
+                    text-transform: uppercase;
+                    background: var(--accent);
+                    color: #fff;
+                    padding: 6px 18px;
+                }
+
+            .mini-gallery-link:hover .mini-gallery-label {
+                opacity: 1;
+            }
+
+            /* ============================================================
+           PROFIL
+        ============================================================ */
+            .profil-top {
+                display: grid;
+                grid-template-columns: 220px 1fr;
+                gap: 4px;
+                margin-bottom: 36px;
+            }
+
+            .profil-photo {
+                width: 100%;
+                aspect-ratio: 1/1;
+                object-fit: cover;
+                object-position: top center;
+                filter: grayscale(1) contrast(1.05);
+                display: block;
+                border: 1px solid var(--border);
+                            }
+
+            .profil-bio {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                padding: 12px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                transition: background 0.35s;
+            }
+
+                .profil-bio h2 {
+                    font-family: 'Montserrat', sans-serif;
+                    font-weight: 700;
+                    font-size: 0.88rem;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    margin-bottom: 10px;
+                }
+
+                .profil-bio p {
+                    font-size: 0.78rem;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+
+                    .profil-bio p strong {
+                        color: var(--text);
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 0.8rem;
+                    }
+
+            .social-icons {
+                display: flex;
+                gap: 8px;
+                margin-top: 10px;
+            }
+
+                .social-icons a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 28px;
+                    height: 28px;
+                    background: var(--surface);
+                    border: 1px solid var(--border);
+                    border-radius: 50%;
+                    color: var(--text);
+                    text-decoration: none;
+                    transition: border-color 0.3s, background 0.3s;
+                }
+
+                    .social-icons a svg {
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    .social-icons a:hover {
+                        border-color: var(--accent);
+                        background: var(--accent-dim);
+                    }
+
+            /* ── CV & REFERENCE BOOK ──────────────────────────────── */
+            .cv-section-title {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 0.82rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                background: var(--accent-dim);
+                border: 1px solid var(--accent);
+                color: var(--accent);
+                text-align: center;
+                padding: 10px;
+                margin-bottom: 16px;
+            }
+
+            /* ── CV & REFERENCE BOOK - Structure ──────────────────────────
+           ┌───────────────────┬───────────────────┬──────────────────────────────────────┐
+           │    CV FR (1/4)    │    CV EN (1/4)    │     Reference Book (2/4)             │
+           │  img 1414×2000px  │  img 1414×2000px  │  img 3508×2481px (ratio ≈ A4 inv.)   │
+           └───────────────────┴───────────────────┴──────────────────────────────────────┘
+
+           Principe :
+           • Le bloc entier fait 4 colonnes égales (1fr 1fr 1fr 1fr).
+           • CV FR et CV EN occupent chacun 1fr (= 1 quart).
+           • Reference Book occupe 2fr (= 2 quarts).
+           • La HAUTEUR est dictée par les images CV via aspect-ratio: 1414/2000.
+             Le navigateur calcule height = colonne_width × (2000/1414) automatiquement.
+           • Le Reference Book reprend cette même hauteur (grille = même row).
+             Son image (ratio ≈ 3508/2481 ≈ 1.414, quasi identique) est couverte
+             sans perte visible avec object-fit: cover.
+           • Aucune hauteur fixe, tout est fluide et responsive.
+        ──────────────────────────────────────────────────────────────── */
+
+            /* Grille 4 colonnes égales, hauteur auto (imposée par le contenu) */
+            .cv-panels {
+                display: grid;
+                grid-template-columns: 1fr 1fr 2fr; /* FR | EN | RefBook */
+                gap: 4px;
+                margin-bottom: 8px;
+                align-items: stretch;
+            }
+
+            /* Le panneau gauche n'est plus nécessaire : les CV sont des colonnes directes */
+            /* On garde .cv-panel-left et .cv-panel-right comme wrappers transparents */
+            .cv-panel-left {
+                display: contents; /* les enfants participent directement à la grille parente */
+            }
+
+            .cv-panel-right {
+                display: contents;
+            }
+
+            /* Carte CV - laisse l'image imposer sa hauteur via aspect-ratio */
+            .cv-card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                text-decoration: none;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                cursor: pointer;
+                overflow: hidden;
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+                .cv-card:hover {
+                    border-color: var(--accent);
+                    box-shadow: 0 6px 24px rgba(123,140,255,0.15);
+                }
+
+            .cv-lang {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 0.65rem;
+                letter-spacing: 0.18em;
+                background: var(--surface2);
+                border-bottom: 1px solid var(--border);
+                padding: 6px 10px;
+                text-align: center;
+                color: var(--muted);
+                flex-shrink: 0;
+            }
+
+            /* Image CV : ratio A4 exact (1414×2000).
+           width:100% + aspect-ratio → la hauteur se calcule automatiquement.
+           object-fit:cover conserve le haut du document visible. */
+        .cv-thumb {
+            width: 100%;
+            display: block;
+            aspect-ratio: 1414 / 2000;
+            object-fit: cover;
+            object-position: top center;
+            filter: brightness(0.9);
+            transition: filter 0.3s;
+        }
+
+            /* Le Reference Book est dans la même ligne de grille → même hauteur automatique.
+           Son image (3508×2481 ≈ ratio 1.414) couvre le conteneur sans perte visible. */
+            .cv-panel-right .cv-thumb {
+                aspect-ratio: unset; /* libère le ratio fixe pour laisser CSS stretch */
+                height: 100%; /* remplit la hauteur imposée par les CV voisins  */
+                object-fit: cover;
+                object-position: center center;
+            }
+
+            .cv-card:hover .cv-thumb {
+                filter: brightness(1.05);
+            }
+
+            .cv-overlay {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0,0,0,0.62);
+                opacity: 0;
+                transition: opacity 0.3s;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.68rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #fff;
+                flex-direction: column;
+                gap: 6px;
+                padding: 8px;
+                text-align: center;
+            }
+
+            .cv-card:hover .cv-overlay {
+                opacity: 1;
+            }
+
+            .cv-overlay span {
+                background: var(--accent);
+                padding: 5px 12px;
+                display: block;
+            }
+
+            .cv-note {
+                text-align: center;
+                font-size: 0.7rem;
+                font-style: italic;
+                color: var(--muted);
+                margin-top: 6px;
+            }
+
+            /* Galerie photos */
+            .photo-gallery {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 4px;
+            margin-top: 36px;
+            }
+
+            .photo-gallery .col-center {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .photo-gallery img {
+                width: 100%;
+                object-fit: cover;
+                filter: grayscale(1) brightness(0.75);
+                border: 1px solid var(--border);
+                display: block;
+            }
+
+            /* col-side dark : 3 radials noirs soft */
+            .photo-gallery .col-side {
+                background:
+                    radial-gradient(ellipse 85% 55% at 25% 35%, #222222 0%, transparent 62%),
+                    radial-gradient(ellipse 70% 75% at 78% 68%, #1a1a1a 0%, transparent 58%),
+                    radial-gradient(ellipse 55% 55% at 52% 52%, #181818 0%, transparent 100%),
+                    #111111;
+                border: 1px solid var(--border);
+            }
+            /* col-side light : 3 radials blancs soft */
+            [data-theme="light"] .photo-gallery .col-side {
+                background:
+                    radial-gradient(ellipse 85% 55% at 25% 35%, #e2e2e2 0%, transparent 62%),
+                    radial-gradient(ellipse 70% 75% at 78% 68%, #d0d0d0 0%, transparent 58%),
+                    radial-gradient(ellipse 55% 55% at 52% 52%, #c8c8c8 0%, transparent 100%),
+                    #d4d4d4;
+                border: 1px solid var(--border);
+            }
+
+/* ============================================================
+   RESPONSIVE — INDEX SEULEMENT
+   ============================================================ */
+/* ============================================================
+           RESPONSIVE - MOBILE (≤ 700px)
+        ============================================================ */
+            @media (max-width: 700px) {
+
+                :root {
+                    --section-gap: 40px;
+                }
+
+                .header-inner {
+                    padding: 12px 16px;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                nav {
+                    width: 100%;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                }
+
+                    nav a.nav-link {
+                        padding: 6px 12px;
+                        font-size: 0.68rem;
+                    }
+
+                .nav-sep {
+                    display: none;
+                }
+
+                .section-inner {
+                    padding: var(--section-gap) 16px;
+                }
+
+                .footer-inner {
+                    padding: 20px 16px;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 14px;
+                }
+
+                .section-title {
+                    font-size: 0.78rem;
+                    padding: 6px 16px;
+                }
+
+                /* Projets 1 colonne */
+                .projects-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .mini-gallery img {
+                    height: 70px;
+                }
+
+                /* Profil empilé */
+                .profil-top {
+                    grid-template-columns: 1fr;
+                }
+
+                /* Photo réduite sur mobile : hauteur max 200px */
+                .profil-photo {
+                    aspect-ratio: unset;
+                    max-height: 200px;
+                    width: auto;
+                    margin: 0 auto;
+                    display: block;
+                }
+
+                .profil-bio {
+                    padding: 16px;
+                }
+
+                /* CV : empilés verticalement sur mobile
+             display:contents est désactivé → on rétablit des blocs normaux */
+                .cv-panels {
+                    grid-template-columns: 1fr 1fr; /* FR | EN sur une ligne */
+                    gap: 4px;
+                }
+
+                .cv-panel-left {
+                    display: contents;
+                }
+                /* FR et EN restent dans la grille */
+                .cv-panel-right {
+                    display: block;
+                    grid-column: 1 / -1; /* Reference Book pleine largeur */
+                }
+                    /* Ref Book mobile : hauteur divisée par 2 (ratio 2× plus large) */
+                    .cv-panel-right .cv-thumb {
+                        height: auto;
+                        aspect-ratio: 2828 / 2000;
+                        transform: none; /* pas de zoom sur mobile */
+                    }
+
+                /* Galerie : colonne centrale uniquement */
+                .photo-gallery {
+                    grid-template-columns: 1fr;
+                }
+
+                    .photo-gallery .col-side {
+                        display: none;
+                    }
+
+                    .photo-gallery img {
+                        height: 150px !important;
+                    }
+            }
+
+            /* ── Tablette (701–900px) ── */
+            @media (min-width: 701px) and (max-width: 900px) {
+                .section-inner {
+                    padding: calc(var(--section-gap) * 0.8) 28px;
+                }
+            }
+            /* ── Mobile : croix 40px ─────────────── */
+            @media (max-width: 700px) {
+                .section-wrap {
+                background-size: 40px 40px!important;
+                }
+            }
+    

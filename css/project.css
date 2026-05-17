@@ -1,0 +1,235 @@
+/* ─────────────────────────────────────────────────
+   PAGE PROJET — styles communs
+───────────────────────────────────────────────── */
+.proj-back {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600; font-size: 0.72rem;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+    border: 1px solid var(--text); padding: 7px 18px;
+    margin-bottom: 36px;
+    transition: background 0.3s, color 0.3s;
+}
+.proj-back:hover { background: var(--text); color: var(--bg-base); }
+
+/* Hero : grande image ou vidéo en 21:9 */
+.proj-hero {
+    width: 100%; aspect-ratio: 21/9;
+    object-fit: cover; display: block;
+    border: 1px solid var(--border);
+    filter: brightness(0.85);
+    margin-bottom: 32px;
+}
+.proj-hero-video {
+    width: 100%; aspect-ratio: 21/9;
+    border: 1px solid var(--border);
+    display: block; margin-bottom: 32px;
+    background: #000;
+}
+.proj-hero-video iframe {
+    width: 100%; height: 100%; border: none; display: block;
+}
+
+/* Genre / Keywords */
+.proj-genre {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 6px;
+}
+
+/* Title */
+.proj-title {
+    font-size: 2.2rem; font-weight: 800;
+    letter-spacing: 0.03em; text-transform: uppercase;
+    line-height: 1.05; margin-bottom: 10px;
+    color: var(--text);
+}
+
+/* Roles */
+.proj-roles {
+    font-size: 0.7rem; letter-spacing: 0.14em;
+    color: var(--muted); text-transform: uppercase;
+    margin-bottom: 36px;
+}
+
+/* 2-col pitch + info */
+.proj-overview {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4px; margin-bottom: 48px;
+}
+.proj-pitch {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 28px; font-size: 0.84rem; line-height: 1.8; color: var(--muted);
+}
+.proj-pitch p + p { margin-top: 14px; }
+.proj-info-block {
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 28px;
+}
+.proj-info-block h3 {
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+}
+.proj-info-block dl { display: grid; grid-template-columns: auto 1fr; gap: 0; }
+.proj-info-block dt {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 7px 16px 7px 0; border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+.proj-info-block dd {
+    font-size: 0.78rem; color: var(--text);
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+}
+
+/* Grande image (map / plein largeur) */
+.proj-big-img {
+    width: 100%; aspect-ratio: 16/7;
+    object-fit: cover; display: block;
+    border: 1px solid var(--border);
+    filter: brightness(0.85);
+    margin-bottom: 48px;
+}
+.proj-img-placeholder {
+    width: 100%; background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.7rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 48px;
+}
+.proj-img-placeholder.ratio-wide    { aspect-ratio: 16/7; }
+.proj-img-placeholder.ratio-hero    { aspect-ratio: 21/9; }
+.proj-img-placeholder.ratio-video   { aspect-ratio: 21/9; }
+.proj-img-placeholder.ratio-square  { aspect-ratio: 1/1;  }
+.proj-img-placeholder.ratio-std     { aspect-ratio: 16/9; }
+
+/* Section contenu (sensation of speed, etc.) */
+.proj-section { margin-bottom: 56px; }
+.proj-section-title {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #fff;
+    background: var(--accent); padding: 7px 18px;
+    display: inline-block; margin-bottom: 20px;
+}
+.proj-section-sub {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text);
+    margin: 20px 0 8px;
+}
+.proj-text {
+    font-size: 0.84rem; line-height: 1.8; color: var(--muted);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 20px 24px; margin-bottom: 20px;
+}
+.proj-text p + p { margin-top: 12px; }
+
+/* Grilles d'images */
+.proj-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 20px; }
+.proj-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin-bottom: 20px; }
+.proj-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; margin-bottom: 20px; }
+.proj-grid-2 img, .proj-grid-3 img, .proj-grid-4 img {
+    width: 100%; aspect-ratio: 16/9; object-fit: cover;
+    display: block; border: 1px solid var(--border);
+    filter: brightness(0.85); transition: filter 0.3s;
+}
+.proj-grid-2 img:hover, .proj-grid-3 img:hover, .proj-grid-4 img:hover { filter: brightness(1); }
+
+/* Placeholder dans les grilles */
+.proj-grid-2 .proj-img-placeholder,
+.proj-grid-3 .proj-img-placeholder,
+.proj-grid-4 .proj-img-placeholder { margin-bottom: 0; }
+
+/* Vidéo large (gameplay) */
+.proj-video-wide {
+    width: 100%; aspect-ratio: 16/9; margin-bottom: 12px;
+    border: 1px solid var(--border); background: #000;
+}
+.proj-video-wide iframe { width: 100%; height: 100%; border: none; display: block; }
+.proj-video-caption {
+    font-size: 0.72rem; color: var(--muted);
+    letter-spacing: 0.08em; text-align: center; margin-bottom: 36px;
+}
+
+/* Numérotés challenges */
+.proj-challenge-num {
+    font-size: 0.62rem; font-weight: 800; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 4px; margin-top: 24px;
+}
+
+/* Synopsis / retrospective block */
+.proj-block {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 28px; margin-bottom: 48px;
+    font-size: 0.84rem; line-height: 1.8; color: var(--muted);
+}
+
+@media (max-width: 700px) {
+    .proj-overview    { grid-template-columns: 1fr; }
+    .proj-grid-2, .proj-grid-3, .proj-grid-4 { grid-template-columns: 1fr 1fr; }
+    .proj-title       { font-size: 1.5rem; }
+    .proj-hero, .proj-hero-video { aspect-ratio: 16/9; }
+    .proj-big-img, .proj-img-placeholder.ratio-wide { aspect-ratio: 16/9; }
+}
+@media (max-width: 480px) {
+    .proj-grid-3, .proj-grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+    
+/* ── Composants communs supplémentaires ────────────────────────────────────── */
+
+/* Grande vidéo (même ratio que .proj-img-placeholder.ratio-wide = 16/7) */
+.proj-video-map {
+    width: 100%; aspect-ratio: 16/7;
+    border: 1px solid var(--border); background: #000;
+    margin-bottom: 48px;
+}
+.proj-video-map iframe { width: 100%; height: 100%; border: none; display: block; }
+
+/* Grille 2×2 (4 images en carré) */
+.proj-grid-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+    margin-bottom: 20px;
+}
+.proj-grid-2x2 .proj-img-placeholder { margin-bottom: 0; }
+
+/* Grosse zone de texte structurée avec sous-titres internes */
+.proj-textblock {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+}
+.proj-textblock-sub {
+    font-size: 0.65rem; font-weight: 800;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 24px; margin-bottom: 8px;
+}
+.proj-textblock-sub:first-child { margin-top: 0; }
+.proj-textblock p {
+    font-size: 0.84rem; line-height: 1.8;
+    color: var(--muted); margin-bottom: 0;
+}
+.proj-textblock p + p { margin-top: 10px; }
+
+/* Rétrospective (bloc partagé, fond légèrement distinct) */
+.proj-retro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    margin-bottom: 48px;
+    font-size: 0.84rem; line-height: 1.8; color: var(--muted);
+}
+.proj-retro p + p { margin-top: 12px; }
+
+@media (max-width: 700px) {
+    .proj-grid-2x2 { grid-template-columns: 1fr 1fr; }
+    .proj-video-map { aspect-ratio: 16/9; }
+}
