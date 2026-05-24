@@ -589,3 +589,14 @@
                 }
             }
     
+
+
+/* Social icons in index — SVG files, invert per theme */
+.social-icon-img {
+    width: 16px; height: 16px;
+    object-fit: contain;
+    display: block;
+    transition: filter 0.35s;
+}
+[data-theme="dark"]  .social-icon-img { filter: invert(1) brightness(2); }
+[data-theme="light"] .social-icon-img { filter: invert(0) brightness(0.1); }
