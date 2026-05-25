@@ -519,3 +519,11 @@
                 .section-wrap {
                 background-size: 40px 40px!important;
                 }
+
+/* Mobile footer: always row — confetti left, arrow right */
+@media (max-width: 700px) {
+    .footer-inner {
+        flex-direction: row !important;
+        padding: 14px 16px;
+    }
+}

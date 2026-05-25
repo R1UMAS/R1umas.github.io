@@ -21,7 +21,6 @@
                 <h1>Junior Level Designer</h1>
                 <p>Marius Queulin</p>
             </div>
-
             <nav>
                 <a href="#wrap-projets" class="nav-link">
                     <span class="t-fr">Projets</span>
@@ -32,15 +31,19 @@
                     <span class="t-en">Profile</span>
                 </a>
                 <div class="nav-sep"></div>
-                <!-- Sélecteur de langue -->
                 <div class="lang-toggle" role="group" aria-label="Langue / Language">
                     <button id="btn-fr" class="active" aria-pressed="true">FR</button>
                     <button id="btn-en" aria-pressed="false">EN</button>
                 </div>
-                <!-- Toggle thème -->
                 <button class="theme-toggle" id="themeBtn" aria-label="Changer le thème">
                     <span class="icon-moon">🌙</span>
                     <span class="icon-sun">☀️</span>
+                </button>
+                <button class="share-btn" id="shareBtn" aria-label="Copier le lien" title="Copier le lien">
+                    <img src="images/icons/share.svg" alt="Share" />
+                    <span class="share-label t-fr">Copier</span>
+                    <span class="share-label t-en">Copy</span>
+                    <span class="share-ok" id="shareOk" aria-live="polite"></span>
                 </button>
             </nav>
         </div>
@@ -88,6 +91,17 @@
                 </span>
 
                 <div class="projects-grid">
+
+                    <!-- Pro Cycling Manager 26 — Tuile large pleine largeur -->
+                    <a class="project-card project-card--wide" href="pro-cycling-manager-26.html">
+                        <img class="cover" src="images/pcm26.jpg" alt="Pro Cycling Manager 26" style="aspect-ratio:16/5;object-fit:cover;width:100%;display:block;filter:brightness(0.85);transition:filter 0.3s;" />
+                        <div class="project-tag">Level Design &ndash; Level Art</div>
+                        <div class="project-info">
+                            <h3>Pro Cycling Manager 26</h3>
+                            <p class="t-fr">Plongez au cœur du management cycliste avec une simulation toujours plus réaliste.</p>
+                            <p class="t-en">Dive into cycling management with an ever more realistic simulation.</p>
+                        </div>
+                    </a>
 
                     <!-- Big Cop Big Moto -->
                     <a class="project-card" href="big-cop-big-moto.html">
@@ -285,6 +299,7 @@
     ============================================================== -->
     <footer>
         <div class="footer-inner">
+            <button class="confetti-btn" id="confettiBtn" aria-label="Confetti" title="🎉">🎉</button>
             <div class="footer-brand">
             </div>
             <a href="#top-anchor" class="back-top" aria-label="Retour en haut">↑</a>
@@ -310,7 +325,7 @@
                     <span class="t-fr">Fermer</span>
                     <span class="t-en">Close</span>
                 </button>
-                <a id="modalDownload" href="#" download target="_blank" rel="noopener" class="btn btn-accent">
+                <a id="modalDownload" href="#" download rel="noopener" class="btn btn-accent">
                     <span class="t-fr">Télécharger</span>
                     <span class="t-en">Download</span>
                 </a>
@@ -327,5 +342,38 @@
 
     <script src="js/shared.js"></script>
     <script src="js/index.js"></script>
+
+    <script>
+    /* ── Clean URLs via History API ─────────────────────────────────────────
+       When navigating within the index (clicking nav links or scrolling past
+       sections), update the browser URL without showing the #anchor hash.
+       Each section-wrap gets an id used for IntersectionObserver.            */
+    (function() {
+        if (!('IntersectionObserver' in window) || !history.replaceState) return;
+        var sections = [
+            { id: 'top-anchor',    path: '/' },
+            { id: 'wrap-demoreel', path: '/' },
+            { id: 'wrap-projets',  path: '/' },
+            { id: 'wrap-profil',   path: '/' },
+        ];
+        var io = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting && e.intersectionRatio >= 0.3) {
+                    /* Always show clean root URL for all index sections */
+                    if (location.pathname !== '/' && location.pathname !== '/index.html') return;
+                    history.replaceState(null, '', '/');
+                }
+            });
+        }, { threshold: 0.3 });
+        sections.forEach(function(s) {
+            var el = document.getElementById(s.id);
+            if (el) io.observe(el);
+        });
+        /* Also: remove hash from URL when page loads with a hash */
+        if (location.hash && location.hash.startsWith('#wrap-')) {
+            history.replaceState(null, '', location.pathname);
+        }
+    })();
+    </script>
 </body>
 </html>

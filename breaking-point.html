@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<header>
+<header >
         <div class="header-inner">
             <div class="header-brand">
                 <h1>Junior Level Designer</h1>
@@ -36,6 +36,12 @@
                     <span class="icon-moon">🌙</span>
                     <span class="icon-sun">☀️</span>
                 </button>
+                <button class="share-btn" id="shareBtn" aria-label="Copier le lien" title="Copier le lien">
+                    <img src="images/icons/share.svg" alt="Share" />
+                    <span class="share-label t-fr">Copier</span>
+                    <span class="share-label t-en">Copy</span>
+                    <span class="share-ok" id="shareOk" aria-live="polite"></span>
+                </button>
             </nav>
         </div>
     </header>
@@ -49,7 +55,7 @@
             </a>
 
             <div class="proj-hero-video">
-                <iframe src="https://www.youtube.com/embed/5JMciPJ5XE0?rel=0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/5JMciPJ5XE0?rel=0&vq=hd1080&hd=1" allowfullscreen></iframe>
                 <!--https://www.youtube.com/watch?v=5JMciPJ5XE0-->
             </div>
 
@@ -129,7 +135,7 @@
                 <span class="proj-section-title t-fr">Gameplay</span>
                 <span class="proj-section-title t-en">Gameplay</span>
                 <div class="proj-video-map">
-                    <iframe src="https://www.youtube.com/embed/iyGp9x0alms?rel=0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/iyGp9x0alms?rel=0&vq=hd1080&hd=1" allowfullscreen></iframe>
                     <!--https://www.youtube.com/watch?v=iyGp9x0alms-->
                 </div>
                 <p class="proj-video-caption t-fr">Durée du jeu : ~30 min</p>
@@ -158,19 +164,16 @@
         </div>
     </div>
 
-<footer>
+    <footer>
         <div class="footer-inner">
-            <div class="footer-brand">
-                <h2>Junior Level Designer</h2>
-                <p>Marius Queulin</p>
-            </div>
+            <div style="width:42px;"></div>
             <a href="index.html#wrap-projets" class="back-top" aria-label="Retour aux projets" title="Retour aux projets">←</a>
         </div>
     </footer>
 
-    <script src="js/shared.js"></script>
+    <script src="js/shared.js"></script>    </div>
 
-    <!-- ── Lightbox image ──────────────────────────────────────────────────── -->
+
     <div class="img-lightbox-overlay" id="imgLightbox" role="dialog" aria-modal="true" aria-label="Aperçu image">
         <div class="img-lightbox-inner" id="imgLightboxInner">
             <button class="img-lightbox-close" id="imgLightboxClose" aria-label="Fermer">✕</button>
@@ -178,21 +181,14 @@
         </div>
     </div>
 
-
     <script>
-    /* ── Lightbox ────────────────────────────────────────────────────────────
-       Toutes les images .proj-page-img deviennent cliquables.
-       Clic en dehors de l'image ou sur ✕ = ferme la lightbox.
-       Touche Échap = ferme aussi.                                             */
     (function() {
         var overlay = document.getElementById('imgLightbox');
         var lbImg   = document.getElementById('imgLightboxImg');
         var lbClose = document.getElementById('imgLightboxClose');
-        var lbInner = document.getElementById('imgLightboxInner');
-
+        if (!overlay) return;
         function openLightbox(src, alt) {
-            lbImg.src = src;
-            lbImg.alt = alt || '';
+            lbImg.src = src; lbImg.alt = alt || '';
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -201,23 +197,44 @@
             lbImg.src = '';
             document.body.style.overflow = '';
         }
-
         document.querySelectorAll('img.proj-page-img').forEach(function(img) {
-            img.addEventListener('click', function() {
-                openLightbox(this.src, this.alt);
-            });
+            img.addEventListener('click', function() { openLightbox(this.src, this.alt); });
         });
-
-        if (lbClose)  lbClose.addEventListener('click', function(e) { e.stopPropagation(); closeLightbox(); });
-        if (overlay)  overlay.addEventListener('click', function(e) {
-            /* close only when clicking the dark overlay, not the image itself */
-            if (e.target === overlay) closeLightbox();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeLightbox();
-        });
+        lbClose.addEventListener('click', function(e) { e.stopPropagation(); closeLightbox(); });
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) closeLightbox(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
     })();
     </script>
 
+    <script>
+    /* Share button on project pages */
+    document.addEventListener('DOMContentLoaded', function() {
+        var shareBtn = document.getElementById('shareBtn');
+        var shareOk  = document.getElementById('shareOk');
+        if (!shareBtn) return;
+        shareBtn.addEventListener('click', function() {
+            var url = 'https://mqueulin.com/';
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(showOk).catch(function() { fallback(url); });
+            } else { fallback(url); }
+        });
+        function fallback(text) {
+            var ta = document.createElement('textarea');
+            ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+            document.body.appendChild(ta); ta.focus(); ta.select();
+            try { document.execCommand('copy'); } catch(e) {}
+            document.body.removeChild(ta); showOk();
+        }
+        function showOk() {
+            if (!shareOk) return;
+            shareOk.textContent = '✓ Copié !';
+            shareOk.classList.add('visible');
+            setTimeout(function() {
+                shareOk.classList.remove('visible');
+                setTimeout(function() { shareOk.textContent = ''; }, 300);
+            }, 2000);
+        }
+    });
+    </script>
 </body>
 </html>

@@ -69,7 +69,7 @@
 }
 .proj-info-block h3 {
     font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    text-transform: uppercase; color: var(--accent); margin-top: 14px;
 }
 .proj-info-block dl { display: grid; grid-template-columns: auto 1fr; gap: 0; }
 .proj-info-block dt {
@@ -273,108 +273,70 @@ img.proj-page-img.ratio-std  { aspect-ratio: 16/9; }
 .proj-video-caption { margin-top: 4px; margin-bottom: 36px; }
 
 /* ─── Title block + store buttons ─────────────────────────────────────────── */
-/* Wrapper: genre/title/roles stay left, store group floats right, same baseline */
+/* 2-column CSS grid: left = text (genre/title/roles), right = store buttons.
+   The right cell auto-matches the height of the left cell via grid row stretch.
+   Buttons sit in a horizontal ROW, new ones added to the LEFT of existing ones
+   (flex-direction: row-reverse), all square at the full height of the text block. */
 .proj-title-area {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr auto;
     gap: 20px;
+    align-items: stretch;
     margin-bottom: 36px;
 }
-.proj-title-text { flex: 1; }
-/* Keep original spacing inside the text block */
-.proj-title-text .proj-genre  { margin-bottom: 6px; }
-.proj-title-text .proj-title  { margin-bottom: 10px; }
-.proj-title-text .proj-roles  { }
 
-/* Store buttons column — height auto-matches the text block beside it */
+/* Left column: genre / title / roles untouched */
+.proj-title-text {}
+.proj-title-text .proj-genre { margin-bottom: 6px; }
+.proj-title-text .proj-title { margin-bottom: 10px; }
+
+/* Right column: wraps the buttons in a row, right-to-left */
 .proj-store-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse; /* first button rightmost; new ones add to left */
+    align-items: stretch;
     gap: 6px;
-    flex-shrink: 0;
-    /* align-self stretch makes it fill the height of proj-title-area */
-    align-self: stretch;
 }
 
-/* Individual store button — fills its share of the column height */
+/* Each button: square, fills the full height of the grid cell (= text block height) */
 .proj-store-btn {
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
-    min-height: 48px;
+    /* aspect-ratio:1/1 makes it square; height is set by the grid row */
+    aspect-ratio: 1 / 1;
+    /* min-height prevents collapse if text block is very short */
+    min-width: 60px;
+    min-height: 60px;
     border: 1px solid var(--border);
     text-decoration: none;
     background: var(--surface);
     transition: border-color 0.25s, background 0.25s, transform 0.2s;
     overflow: hidden;
+    flex-shrink: 0;
 }
 .proj-store-btn:hover {
     border-color: var(--accent);
     background: var(--accent-dim);
-    transform: scale(1.04);
+    transform: scale(1.03);
 }
 .proj-store-btn img {
-    width: 44px; height: 44px;
+    width: 55%;
+    height: 55%;
     object-fit: contain;
     transition: filter 0.35s;
 }
 [data-theme="dark"]  .proj-store-btn img { filter: invert(1) brightness(2); }
 [data-theme="light"] .proj-store-btn img { filter: invert(0) brightness(0.1); }
-
-/* ─── Lightbox modal ────────────────────────────────────────────────────────── */
-.img-lightbox-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.92);
-    z-index: 9000;
-    align-items: center;
-    justify-content: center;
-    cursor: zoom-out;
-}
-.img-lightbox-overlay.active { display: flex; }
-
-.img-lightbox-inner {
-    position: relative;
-    max-width: 92vw;
-    max-height: 92vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.img-lightbox-inner img {
-    max-width: 92vw;
-    max-height: 92vh;
-    object-fit: contain;
-    display: block;
-    cursor: default;
-    box-shadow: 0 0 60px rgba(0,0,0,0.8);
-}
-
-/* Close button */
-.img-lightbox-close {
-    position: absolute;
-    top: -14px;
-    right: -14px;
-    width: 32px; height: 32px;
-    background: var(--accent);
-    border: none;
-    border-radius: 50%;
-    color: #fff;
-    font-size: 1.1rem;
-    line-height: 1;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 9001;
-    transition: background 0.2s, transform 0.2s;
-    flex-shrink: 0;
-}
-.img-lightbox-close:hover { background: #9aaaff; transform: scale(1.1); }
-
-@media (max-width: 700px) {
-    .proj-title-area { flex-direction: column; gap: 14px; }
     .proj-store-group { flex-direction: row; align-self: auto; }
     .proj-store-btn { flex: none; width: 56px; min-height: 56px; }
     .proj-store-btn img { width: 34px; height: 34px; }
 }
+
+
+/* Suppress any stray ::after on proj-back (can appear as small cross) */
+.proj-back::after { display: none !important; }
+
+/* Remove bottom gap before footer in project pages */
+.section-inner > .proj-section:last-of-type { margin-bottom: 0; }
+.section-wrap > .section-inner { padding-bottom: calc(var(--section-gap) * 0.5); }

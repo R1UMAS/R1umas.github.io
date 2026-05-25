@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark" data-lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pro Cycling Manager 26 – Marius Queulin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="stylesheet" href="css/project.css" />
+</head>
+<body>
+
+<header >
+        <div class="header-inner">
+            <div class="header-brand">
+                <h1>Junior Level Designer</h1>
+                <p>Marius Queulin</p>
+            </div>
+            <nav>
+                <a href="index.html#wrap-projets" class="nav-link">
+                    <span class="t-fr">Projets</span>
+                    <span class="t-en">Projects</span>
+                </a>
+                <a href="index.html#wrap-profil" class="nav-link">
+                    <span class="t-fr">Profil</span>
+                    <span class="t-en">Profile</span>
+                </a>
+                <div class="nav-sep"></div>
+                <div class="lang-toggle" role="group" aria-label="Langue / Language">
+                    <button id="btn-fr" class="active" aria-pressed="true">FR</button>
+                    <button id="btn-en" aria-pressed="false">EN</button>
+                </div>
+                <button class="theme-toggle" id="themeBtn" aria-label="Changer le thème">
+                    <span class="icon-moon">🌙</span>
+                    <span class="icon-sun">☀️</span>
+                </button>
+                <button class="share-btn" id="shareBtn" aria-label="Copier le lien" title="Copier le lien">
+                    <img src="images/icons/share.svg" alt="Share" />
+                    <span class="share-label t-fr">Copier</span>
+                    <span class="share-label t-en">Copy</span>
+                    <span class="share-ok" id="shareOk" aria-live="polite"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="section-wrap bg-base">
+        <div class="section-inner">
+
+            <a href="index.html#wrap-projets" class="proj-back">
+                <span class="t-fr">&#8592; Retour aux projets</span>
+                <span class="t-en">&#8592; Back to projects</span>
+            </a>
+
+            <!-- VIDEO PRINCIPALE -->
+            <div class="proj-hero-video">
+                <iframe
+                    src="https://www.youtube.com/embed/udKIPAQu18s?rel=0&vq=hd1080&hd=1"
+                    title="Pro Cycling Manager 26"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <!-- GENRE / TITRE / ROLES + BOUTON STEAM -->
+            <div class="proj-genre">Cycling Simulation Management</div>
+            <div class="proj-title-area">
+                <div class="proj-title-text">
+                    <h1 class="proj-title">Pro Cycling Manager 26</h1>
+                    <div class="proj-roles">Level Design &ndash; Level Art</div>
+                </div>
+                <div class="proj-store-group">
+                    <!-- Bouton Steam — dupliquez pour ajouter d'autres -->
+                    <a href="https://store.steampowered.com/app/3936530/Pro_Cycling_Manager_26/"
+                       class="proj-store-btn" target="_blank" rel="noopener noreferrer" aria-label="Voir sur Steam">
+                        <img src="images/icons/steam.svg" alt="Steam" />
+                    </a>
+                    <!-- <a href="YOUR_ITCHIO_URL" class="proj-store-btn" target="_blank" rel="noopener noreferrer" aria-label="Itch.io">
+                        <img src="images/icons/itchio.svg" alt="Itch.io" />
+                    </a> -->
+                </div>
+            </div>
+
+            <!-- PITCH + INFORMATIONS -->
+            <div class="proj-overview">
+                <div class="proj-pitch">
+                    <h3 class="proj-info-block__label t-fr">Pitch</h3>
+                    <h3 class="proj-info-block__label t-en">Pitch</h3>
+                    <p class="t-fr">Plongez au coeur du management cycliste avec une simulation toujours plus realiste. Recrutement, staff, planification de la saison, strategie en course : prenez chaque decision et menez votre equipe vers la victoire sur les plus grandes competitions.</p>
+                    <p class="t-en">Dive into cycling management with an ever more realistic simulation. Recruitment, staff, season planning, race strategy: make every decision and lead your team to victory on the biggest races.</p>
+                </div>
+                <div class="proj-info-block">
+                    <h3 class="t-fr">Informations</h3>
+                    <h3 class="t-en">Details</h3>
+                    <dl>
+                        <dt class="t-fr">Outils</dt>     <dt class="t-en">Tools</dt>       <dd>Level Editor, Tortoise SVN, UE5, GPX, Google Earth & suite</dd>
+                        <dt class="t-fr">Duree</dt>      <dt class="t-en">Duration</dt>    <dd>6 months Internship [January-July 2026]</dd>
+                        <dt class="t-fr">Equipe</dt>     <dt class="t-en">Team</dt>        <dd>~20 people excluding Nacon & service providers</dd>
+                        <dt class="t-fr">Contraintes</dt><dt class="t-en">Constraints</dt> <dd>Scale 1:10, realism, assets & editor limitation, Lots of stages & short time </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- DETAILS -->
+            <div class="proj-section">
+                <span class="proj-section-title t-fr">Details</span>
+                <span class="proj-section-title t-en">Details</span>
+                <div class="proj-text">
+                    <p class="t-fr">
+                        Après mes études, j'ai eu la chance d'être pris en tant que stagiaire Level Designer à Cyanide Nanterre pour réaliser PCM 26 avec la team cycling.
+                        <br /><br />J'ai rejoint le projet pendant la phase de production donc l'objectif LD était de créer toutes les étapes (Tour de France, Giro d'Italia, Vuelta a España,...) du landscape au lampadaire (si on pouvait).
+                        <br /><br />Pour cela, j'ai utilisé mes outils et mes contraintes (détaillés en haut) en priorisant le temps et les assets plaçables : des gros monuments aux petits parcs, l'ordre d'importance se fait naturellement.
+                        <br /><br />Ce qui nous donne beaucoup de maps réalisées, certes détaillable et perfectible, mais suffisantes pour l'expérience du joueur, car les intentions et les assets essentiels, propre à chaque étape, sont placés.
+                        <br /><br />Grâce à ce projet et à Cyanide, j'ai appris à être encore plus efficace et pragmatique, j'ai pu prendre des choix logiques et trouver des solutions créatives en étant conscient, de A à Z, de chaque contrainte et impact.
+                        <br />J'ai aussi pu mieux me gérer et me faire confiance en prenant les actions nécessaires et en communiquant avec mes collègues LD au besoin. Enfin, j'ai découvert le bonheur de travailler (pour de vrai) sur quelque chose qui m'anime au quotidien et qui me pousse vers le haut.
+                        <br /><br />Pour tout ça, je ne remercierais jamais assez Cyanide, Isabelle, Pierre et Erwan pour leur confiance et la chance qu'ils m'ont donnée !
+                    </p>
+                    <p class="t-en">
+                        After finishing my studies, I was lucky enough to be taken on as a Level Designer intern at Cyanide Nanterre to work on PCM 26 with the cycling team.
+                        <br /><br />I joined the project during the production phase, so the LD’s objective was to create all the stages (Tour de France, Giro d’Italia, Vuelta a España, etc.) from the landscape down to the street lamps (if possible).
+                        <br /><br />To do this, I used my tools and worked within my constraints (detailed above), prioritising time and placeable assets: from large monuments to small parks, the order of importance emerged naturally.
+                        <br /><br />This has resulted in a large number of completed maps; whilst they could certainly be made more detailed and improved, they are sufficient for the player experience as the key elements and essential assets specific to each stage are in place.
+                        <br /><br />Thanks to this project and Cyanide, I’ve learnt to be even more efficient and pragmatic; I’ve been able to make logical choices and find creative solutions whilst being fully aware, from start to finish, of every constraint and its implications.
+                        <br />I’ve also been able to manage myself better and trust my own judgement by taking the necessary actions and communicating with my LD colleagues as needed. Finally, I discovered the joy of working (for real) on something that inspires me every day and pushes me to excel.
+                        <br /><br />For all of this, I cannot thank Cyanide, Isabelle, Pierre and Erwan enough for their trust and the opportunity they gave me!
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div><footer>
+        <div class="footer-inner">
+            <div style="width:42px;"></div>
+            <a href="index.html#wrap-projets" class="back-top" aria-label="Retour aux projets" title="Retour aux projets">←</a>
+        </div>
+    </footer>
+
+    <script src="js/shared.js"></script>
+
+    <div class="img-lightbox-overlay" id="imgLightbox" role="dialog" aria-modal="true" aria-label="Aperçu image">
+        <div class="img-lightbox-inner" id="imgLightboxInner">
+            <button class="img-lightbox-close" id="imgLightboxClose" aria-label="Fermer">✕</button>
+            <img id="imgLightboxImg" src="" alt="" />
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        var overlay = document.getElementById('imgLightbox');
+        var lbImg   = document.getElementById('imgLightboxImg');
+        var lbClose = document.getElementById('imgLightboxClose');
+        if (!overlay) return;
+        function openLightbox(src, alt) {
+            lbImg.src = src; lbImg.alt = alt || '';
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            overlay.classList.remove('active');
+            lbImg.src = '';
+            document.body.style.overflow = '';
+        }
+        document.querySelectorAll('img.proj-page-img').forEach(function(img) {
+            img.addEventListener('click', function() { openLightbox(this.src, this.alt); });
+        });
+        lbClose.addEventListener('click', function(e) { e.stopPropagation(); closeLightbox(); });
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) closeLightbox(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+    })();
+    </script>
+
+    <script>
+    /* Share button on project pages */
+    document.addEventListener('DOMContentLoaded', function() {
+        var shareBtn = document.getElementById('shareBtn');
+        var shareOk  = document.getElementById('shareOk');
+        if (!shareBtn) return;
+        shareBtn.addEventListener('click', function() {
+            var url = 'https://mqueulin.com/';
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(showOk).catch(function() { fallback(url); });
+            } else { fallback(url); }
+        });
+        function fallback(text) {
+            var ta = document.createElement('textarea');
+            ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+            document.body.appendChild(ta); ta.focus(); ta.select();
+            try { document.execCommand('copy'); } catch(e) {}
+            document.body.removeChild(ta); showOk();
+        }
+        function showOk() {
+            if (!shareOk) return;
+            shareOk.textContent = '✓ Copié !';
+            shareOk.classList.add('visible');
+            setTimeout(function() {
+                shareOk.classList.remove('visible');
+                setTimeout(function() { shareOk.textContent = ''; }, 300);
+            }, 2000);
+        }
+    });
+    </script>
+</body>
+</html>
