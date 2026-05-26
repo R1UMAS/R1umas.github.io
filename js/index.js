@@ -1,5 +1,6 @@
 /* index.js — Modal PDF, email anti-bot, share button, confetti (index.html) */
-document.addEventListener('DOMContentLoaded', function() {
+/* Scripts are loaded at end of <body> so the DOM is already ready — execute directly. */
+(function() {
 
     /* ── MODALE PDF ──────────────────────────────────────────────────
        Les cartes CV ont data-pdf + data-title.
@@ -272,4 +273,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-});
+})();
