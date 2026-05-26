@@ -197,6 +197,7 @@
     margin-bottom: 20px;
 }
 .proj-grid-2x2 .proj-img-placeholder { margin-bottom: 0; }
+.proj-grid-2x2 img.proj-page-img { aspect-ratio: 16/9; }
 
 /* Grosse zone de texte structurée avec sous-titres internes */
 .proj-textblock {
@@ -281,7 +282,7 @@ img.proj-page-img.ratio-std  { aspect-ratio: 16/9; }
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 20px;
-    align-items: stretch;
+    align-items: center; /* vertically center the store group with the text block */
     margin-bottom: 36px;
 }
 
@@ -290,24 +291,21 @@ img.proj-page-img.ratio-std  { aspect-ratio: 16/9; }
 .proj-title-text .proj-genre { margin-bottom: 6px; }
 .proj-title-text .proj-title { margin-bottom: 10px; }
 
-/* Right column: wraps the buttons in a row, right-to-left */
+/* Right column: wraps the buttons in a row */
 .proj-store-group {
     display: flex;
-    flex-direction: row-reverse; /* first button rightmost; new ones add to left */
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
     gap: 6px;
 }
 
-/* Each button: square, fills the full height of the grid cell (= text block height) */
+/* Each button: fixed square ~72px — roughly the height of genre+title+roles */
 .proj-store-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* aspect-ratio:1/1 makes it square; height is set by the grid row */
-    aspect-ratio: 1 / 1;
-    /* min-height prevents collapse if text block is very short */
-    min-width: 60px;
-    min-height: 60px;
+    width: 72px;
+    height: 72px;
     border: 1px solid var(--border);
     text-decoration: none;
     background: var(--surface);
@@ -328,11 +326,17 @@ img.proj-page-img.ratio-std  { aspect-ratio: 16/9; }
 }
 [data-theme="dark"]  .proj-store-btn img { filter: invert(1) brightness(2); }
 [data-theme="light"] .proj-store-btn img { filter: invert(0) brightness(0.1); }
+
+/* ─── Genre inside title-area (flex variant) ───────────────────────────────── */
+/* When .proj-genre is placed inside .proj-title-text, no extra margin needed */
+.proj-title-text .proj-genre { margin-bottom: 4px; }
+
+/* ─── Store group fix for row layout ────────────────────────────────────────── */
+@media (max-width: 700px) {
     .proj-store-group { flex-direction: row; align-self: auto; }
     .proj-store-btn { flex: none; width: 56px; min-height: 56px; }
     .proj-store-btn img { width: 34px; height: 34px; }
 }
-
 
 /* Suppress any stray ::after on proj-back (can appear as small cross) */
 .proj-back::after { display: none !important; }
@@ -340,3 +344,107 @@ img.proj-page-img.ratio-std  { aspect-ratio: 16/9; }
 /* Remove bottom gap before footer in project pages */
 .section-inner > .proj-section:last-of-type { margin-bottom: 0; }
 .section-wrap > .section-inner { padding-bottom: calc(var(--section-gap) * 0.5); }
+
+/* ─── Image Lightbox ─────────────────────────────────────────────────────────── */
+.img-lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+.img-lightbox-overlay.active { display: flex; }
+.img-lightbox-inner {
+    position: relative;
+    max-width: 92vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.img-lightbox-inner img {
+    max-width: 92vw;
+    max-height: 88vh;
+    object-fit: contain;
+    display: block;
+    border: 1px solid var(--border);
+}
+.img-lightbox-close {
+    position: absolute;
+    top: -36px;
+    right: 0;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 1.1rem;
+    width: 32px; height: 32px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+}
+.img-lightbox-close:hover { border-color: var(--accent); background: var(--accent-dim); }
+
+/* ─── Footer project pages: same height as header ───────────────────────────── */
+footer .footer-inner {
+    padding: 18px 48px;
+}
+
+/* ─── Share-ok feedback on project pages ─────────────────────────────────────── */
+/* Reuse share-ok from index.css if loaded; define fallback here */
+.share-btn { position: relative; }
+.share-ok {
+    position: absolute;
+    bottom: -26px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.58rem; font-weight: 700;
+    letter-spacing: 0.1em; white-space: nowrap;
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+    z-index: 200;
+}
+.share-ok.visible { opacity: 1; }
+
+/* ─── Confetti button (project pages) ───────────────────────────────────────── */
+.confetti-btn {
+    background: none;
+    border: 1px solid var(--border);
+    width: 42px; height: 42px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0; font-size: 1.1rem;
+    transition: border-color 0.3s, background 0.3s, transform 0.15s;
+    flex-shrink: 0;
+}
+.confetti-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
+.confetti-btn:active { transform: scale(0.92); }
+
+/* ─── Share button (project pages) ──────────────────────────────────────────── */
+.share-btn {
+    display: flex; align-items: center; justify-content: center;
+    background: none;
+    border: 1px solid var(--border);
+    width: 42px; height: 42px;
+    cursor: pointer; padding: 0;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative; flex-shrink: 0;
+}
+.share-btn img { width: 18px; height: 18px; object-fit: contain; transition: filter 0.35s; }
+[data-theme="dark"]  .share-btn img { filter: invert(1) brightness(2); }
+[data-theme="light"] .share-btn img { filter: invert(0) brightness(0.1); }
+.share-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
+
+/* ─── Confetti canvas ────────────────────────────────────────────────────────── */
+#confetti-canvas {
+    position: fixed; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 99999;
+}

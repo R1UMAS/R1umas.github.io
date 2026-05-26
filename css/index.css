@@ -488,6 +488,12 @@
                     gap: 6px;
                 }
 
+                /* Mobile: arrow always visible on project cards (no hover) */
+                .project-card::after {
+                    opacity: 1 !important;
+                    transform: translateX(0) !important;
+                }
+
                     nav a.nav-link {
                         padding: 6px 12px;
                         font-size: 0.68rem;

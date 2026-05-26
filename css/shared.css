@@ -488,16 +488,43 @@
                     gap: 10px;
                 }
 
+                /* Center "Marius Queulin" name on mobile */
+                .header-brand {
+                    text-align: center;
+                    width: 100%;
+                }
+                .header-brand p {
+                    text-align: center;
+                }
+
                 nav {
                     width: 100%;
-                    flex-wrap: wrap;
-                    gap: 6px;
+                    flex-wrap: nowrap;     /* single line */
+                    gap: 4px;
+                    justify-content: center;
+                    overflow-x: auto;      /* scroll if truly too tight */
                 }
 
                     nav a.nav-link {
-                        padding: 6px 12px;
-                        font-size: 0.68rem;
+                        padding: 5px 9px;
+                        font-size: 0.63rem;
+                        white-space: nowrap;
+                        flex-shrink: 0;
                     }
+
+                /* Shrink lang/theme/share buttons so they all fit */
+                .lang-toggle button {
+                    font-size: 0.63rem;
+                    padding: 5px 8px;
+                }
+                .theme-toggle {
+                    width: 34px; height: 34px;
+                    font-size: 0.9rem;
+                }
+                .share-btn {
+                    width: 34px; height: 34px;
+                }
+                .share-btn img { width: 15px; height: 15px; }
 
                 .nav-sep {
                     display: none;
